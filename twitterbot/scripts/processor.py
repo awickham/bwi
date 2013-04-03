@@ -3,6 +3,11 @@ import roslib; roslib.load_manifest('twitterbot')
 import rospy
 from std_msgs.msg import String
 
+import time
+
+tweet_history = []
+time_of_last_tweet = time.time()
+
 def callback(data):
     rospy.loginfo(rospy.get_name() + ": I heard %s" % data.data)
 
