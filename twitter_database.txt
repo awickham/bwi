@@ -1,0 +1,58 @@
+***BEGIN COMMENT***
+This file contains the text that makes up the default twitter_database. This
+includes things like emotions, parts of speech (like adjective or adverb), and
+hashtags that the robots will use when generating tweets.
+***END COMMENT***
+
+***BEGIN COMMENT***
+Here we map emotions (in the form of emoticons, such as a smiley face) to their
+default ratios. This is how it works: add up all the ratios into a sum; then,
+when a emotion must be chosen to use within a tweet, emotions with higher ratios
+have a greater chance of being picked. For instance, if all the ratios are the
+same (as in this default definition), all emotions have an equal chance of
+being chosen. On the other hand, suppose :) has a ratio of 3 and :( has a ratio
+of 1. In this case, the :) emotion will be chosen 3/4 of the time, while the :(
+is only chosen 1/4 of the time. These ratios may be overwritten by particular
+robots to give them more distinct personalities.
+***END COMMENT***
+EMOTION RATIOS
+:) = 1
+:( = 1
+END EMOTION RATIOS
+
+***BEGIN COMMENT***
+Here we map emotions (in the form of emoticons, such as a smiley face) to
+adjectives describing those emotions.
+***END COMMENT***
+ADJECTIVES
+Emotion = :)
+happy
+great
+pleasant
+lovely
+
+Emotion = :(
+sad
+depressing
+unpleasant
+END ADJECTIVES
+
+***BEGIN COMMENT***
+This is where things get really interesting. We map various keys to reasonable
+responses that will then be tweeted. However, you'll notice some strange syntax
+that needs some explaining. Throughout the text, there are a number of "dynamic
+tokens," which are enclosed in angular brackets (< and >) and will be replaced
+by dynamic content at runtime.
+***END COMMENT***
+TWEET DICTIONARY
+Key = turned_on
+Just woke up. Today is going to be a <adj> day! <emoticon>
+
+Key = bored
+*sigh* I'm just <adv_-.-_:/> sitting here... <emoticon> <hashtag_emotion>
+
+Key = default
+I don't have an opinion on this, but everyone else is doing it, so... <hashtag_trending>
+END TWEET DICTIONARY
+
+END SCRIPT
