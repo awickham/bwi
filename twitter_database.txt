@@ -17,12 +17,22 @@ robots to give them more distinct personalities.
 ***END COMMENT***
 EMOTION RATIOS
 :) = 1
+:D = 1
 :( = 1
+:'( = 1
+:/ = 1
+-.- = 1
+:s = 1
+<3 = 1
 END EMOTION RATIOS
 
 ***BEGIN COMMENT***
 Here we map emotions (in the form of emoticons, such as a smiley face) to
 adjectives describing those emotions.
+
+NOTE: We will need to differentiate between various types of adjectives. For
+instance, you would say "Today is boring" and "I am bored" but not "Today is
+bored."
 ***END COMMENT***
 ADJECTIVES
 Emotion = :)
@@ -31,11 +41,104 @@ great
 pleasant
 lovely
 
+Emotion = :D
+super happy
+
 Emotion = :(
 sad
 depressing
 unpleasant
+
+Emotion = :'(
+super sad
+
+Emotion = :/
+regretful
+boring
+
+Emotion = -.-
+boring
+tedious
+tiresome
+
+Emotion = :s
+scared
+uncertain
+
+Emotion = <3
+lovable
+warm and fuzzy
 END ADJECTIVES
+
+***BEGIN COMMENT***
+Now we map emotions to adverbs.
+***END COMMENT***
+ADVERBS
+Emotion = :)
+happily
+
+Emotion = :D
+very happily
+
+Emotion = :(
+sadly
+
+Emotion = :'(
+very sadly
+
+Emotion = :/
+regretfully
+
+Emotion = -.-
+monotonously
+
+Emotion = :s
+frightfully
+
+Emotion = <3
+lovingly
+END ADVERBS
+
+***BEGIN COMMENT***
+Where there's a tweet, there's gotta be hashtags! Here are generic hashtags
+that will work with pretty much any tweet.
+***END COMMENT***
+HASHTAG GENERIC
+#YOLO
+#SWAG
+#YOLOSWAG
+END HASHTAG GENERIC
+
+***BEGIN COMMENT***
+Some hashtags will be emotion-specific. We list these here.
+***END COMMENT***
+HASHTAG EMOTION
+Emotion = :)
+#OhHappyDay
+
+Emotion = :D
+#happyhappyhappy
+
+Emotion = :(
+#whyme
+
+Emotion = :'(
+#CryingLikeAGirl
+#TurnMeOff
+#EndMyMisery
+
+Emotion = :/
+#Regrets
+
+Emotion = -.-
+#IsItTomorrowYet
+
+Emotion = :s
+#Worried
+
+Emotion = <3
+#WhatIsLove
+END HASHTAG EMOTION
 
 ***BEGIN COMMENT***
 This is where things get really interesting. We map various keys to reasonable
