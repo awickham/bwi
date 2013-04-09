@@ -14,10 +14,12 @@ def get_trending_topics():
 current_emotion = ""
 
 emotion_ratios = {":)": 1,
-                  ":(": 0}
+                  ":(": 1}
 
 adjectives = {":)": ["happy", "great", "pleasant", "lovely"],
               ":(": ["sad", "depressing", "unpleasant"]}
+
+emotions = list(adjectives.keys())
 
 tweet_outline = {"turned_on": ["Just woke up. Today is going to be a <adj> day! <emoticon>"],
                  "bored": ["*sigh* I'm just <adv_-.-_:|> sitting here... <emoticon>\n<hashtag_emotion>"],
@@ -37,7 +39,7 @@ def set_emotion(emotions):
         corresponding_emotions.append(emotion)
     random = randint(emotion_ranges[0], emotion_ranges[-1])
     #anything set to 0 odds should not have a chance to be picked
-    if random is 0:
+    if random == 0:
         random = 1
     for i, x in enumerate(emotion_ranges):
         if x >= random:
@@ -51,7 +53,8 @@ def get_adjective(emotion_list):
     if current_emotion == "":
         set_emotion(emotion_list)
     #choose random adj based on emotion
-    return choice(adjectives[current_emotion])
+    possible_adjs = adjectives[current_emotion]
+    return choice(possible_adjs)
 
 '''Picks an emoticon from a list of possible emotions, based on their ratios'''
 def get_emoticon(emotion_list):
@@ -62,12 +65,12 @@ def get_emoticon(emotion_list):
     return current_emotion
 
 '''Maps dynamic tokens to functions that generate their content'''
-translated_token = {"adj": get_adjective(list(adjectives.keys())),
-                    "emoticon": get_emoticon(list(adjectives.keys()))}
+translated_token = {"adj": get_adjective,
+                    "emoticon": get_emoticon}
 
 '''Determines if the given token is enclosed by < and >'''
 def is_dynamic(token):    
-    return len(token) > 0 and token[0] == "<" and token[-1] == ">"
+    return len(token) > 0 and token.find("<") != -1 and token.find(">") != -1
 
 '''If the token is dynamic, this replaces it with an adjective, emoticon,
 etc. accordingly'''
@@ -76,11 +79,25 @@ def parse_token(token):
     if not is_dynamic(token):
         return token
     #remove < and >
-    token = token[1:-1]
+    index_open = token.find("<")
+    index_close = token.find(">")
+    str_before = token[:index_open]
+    str_after = ""
+    if len(token) > index_close + 1:
+        str_after = token[index_close + 1:]
+    token = token[index_open + 1:index_close]
+    
     token_components = token.split("_")
-    #TODO: allow for specified emotions
-    if len(token_components) == 1:
-        return translated_token[token_components[0]]
+    token_type = token_components[0]
+    if len(token_components) > 1: #there are specified emotions to choose from
+        global current_emotion
+        current_emotion = choice(token_components[1:])
+    if token_type in translated_token: #token is defined
+        #get function to generate token content
+        transform_token = translated_token[token_type]
+        return str_before + transform_token(emotions) + str_after
+    #token undefined
+    return str_before + "<" + token + ">" + str_after
 
 '''Iterates over and parses the tokens (words) of the given string. If the word
 "a" is followed by a dynamic token, that token is parsed to determine if it
@@ -91,7 +108,7 @@ def parse_tweet(tweet):
     global current_emotion
     current_emotion = ""
     tokens = tweet.split(" ")
-    parsed_tweet = tokens[0]
+    parsed_tweet = parse_token(tokens[0])
     tokens = tokens[1:]
     for i, x in enumerate(tokens):
         if x == '':
@@ -108,4 +125,4 @@ def parse_tweet(tweet):
     return parsed_tweet
 
 
-print( parse_tweet( tweet_outline["turned_on"][0] ) )
+print(parse_tweet("This is such a <adj>, <adj> day <emoticon>"))
