@@ -23,16 +23,21 @@ EMOTION RATIOS
 :/ = 1
 -.- = 1
 :s = 1
+>:( = 1
 <3 = 1
 END EMOTION RATIOS
 
 ***BEGIN COMMENT***
 Here we map emotions (in the form of emoticons, such as a smiley face) to
-adjectives describing those emotions.
+adjectives that someone with those emotions might use. These adjectives are NOT
+describing the emotion itself. For instance, if the emotion is >:(, words like
+"terrible" are better suited than words like "angry," even though "angry" seems
+more align with the emoticon. This is because a tweet like "Today is a terrible
+day! >:(" makes much more sense than "Today is an angry day! >:("
 
-NOTE: We will need to differentiate between various types of adjectives. For
-instance, you would say "Today is boring" and "I am bored" but not "Today is
-bored."
+NOTE: These adjectives do not include participles (verbs acting as adjectives,
+such as depressed [past participle] and depressing [present particple]). These
+are addressed in later sections below this one.
 ***END COMMENT***
 ADJECTIVES
 Emotion = :)
@@ -46,7 +51,7 @@ super happy
 
 Emotion = :(
 sad
-depressing
+depressed
 unpleasant
 
 Emotion = :'(
@@ -64,6 +69,9 @@ tiresome
 Emotion = :s
 scared
 uncertain
+
+Emotion = >:(
+terrible
 
 Emotion = <3
 lovable
@@ -95,13 +103,17 @@ monotonously
 Emotion = :s
 frightfully
 
+Emotion = >:(
+terribly
+exceedingly
+
 Emotion = <3
 lovingly
 END ADVERBS
 
 ***BEGIN COMMENT***
 Where there's a tweet, there's gotta be hashtags! Here are generic hashtags
-that will work with pretty much any tweet.
+that will work with pretty much any tweet. These will typically be entertaining.
 ***END COMMENT***
 HASHTAG GENERIC
 #YOLO
@@ -135,6 +147,9 @@ Emotion = -.-
 
 Emotion = :s
 #Worried
+
+Emotion = >:(
+#ImGoingToRunOverSomeone
 
 Emotion = <3
 #WhatIsLove
