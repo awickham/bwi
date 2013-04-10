@@ -29,33 +29,29 @@ END EMOTION RATIOS
 
 ***BEGIN COMMENT***
 Here we map emotions (in the form of emoticons, such as a smiley face) to
-adjectives that someone with those emotions might use. These adjectives are NOT
-describing the emotion itself. For instance, if the emotion is >:(, words like
-"terrible" are better suited than words like "angry," even though "angry" seems
-more align with the emoticon. This is because a tweet like "Today is a terrible
-day! >:(" makes much more sense than "Today is an angry day! >:("
-
-NOTE: These adjectives do not include participles (verbs acting as adjectives,
-such as depressed [past participle] and depressing [present particple]). These
-are addressed in later sections below this one.
+adjectives that cause those emotions. As an example, we want adjectives that
+will fit the first <adj> token in "The <adj> person/day made me <adj>."
 ***END COMMENT***
-ADJECTIVES
+ADJECTIVES-CAUSE
 Emotion = :)
 happy
 great
 pleasant
 lovely
+exciting
 
 Emotion = :D
-super happy
+very happy
+exuberant
 
 Emotion = :(
 sad
-depressed
+depressing
 unpleasant
 
 Emotion = :'(
-super sad
+very sad
+horrific
 
 Emotion = :/
 regretful
@@ -67,16 +63,65 @@ tedious
 tiresome
 
 Emotion = :s
-scared
+scary
 uncertain
 
 Emotion = >:(
 terrible
+ghastly
 
 Emotion = <3
 lovable
 warm and fuzzy
-END ADJECTIVES
+carefree
+END ADJECTIVES-CAUSE
+
+***BEGIN COMMENT***
+To extend the previous section, we map emotions to adjectives that describe those
+emotions (this is different from the previous section, where the adjectives
+*caused* the emotions). As an example, we want adjectives that will fit the
+second <adj> token in "The <adj> person/day made me <adj>."
+***END COMMENT***
+ADJECTIVES-EFFECT
+Emotion = :)
+happy
+excited
+relaxed
+
+Emotion = :D
+overjoyed
+
+Emotion = :(
+depressed
+sad
+
+Emotion = :'(
+very depressed
+emotional
+upset
+
+Emotion = :/
+bored
+uncertain
+
+Emotion = -.-
+tired
+exhausted
+bored
+
+Emotion = :s
+frightened
+worried
+uncertain
+
+Emotion = >:(
+angry
+mad
+furious
+
+Emotion = <3
+loved
+END ADJECTIVES-EFFECT
 
 ***BEGIN COMMENT***
 Now we map emotions to adverbs.
