@@ -4,6 +4,14 @@ Created on Apr 7, 2013
 @author: Tony
 '''
 
+emotion_ratios = {}
+adjectives_cause = {}
+adjectives_effect = {}
+adverbs = {}
+hashtag_generic = []
+hashtag_emotion = {}
+tweet_dictionary = {}
+
 def get_emotion_ratios(f):
     '''Maps emotions to ratios'''
     emotion_ratios = {}
@@ -17,12 +25,12 @@ def get_emotion_ratios(f):
         line = f.readline().rstrip('\n')
     return emotion_ratios
 
-def get_adjectives(f):
+def get_adjectives_cause(f):
     '''Maps emotions to adjectives'''
     adjectives = {}
     current_emotion = ""
     line = f.readline().rstrip('\n')
-    while line != "END ADJECTIVES":
+    while line != "END ADJECTIVES-CAUSE":
         #ignore blank lines
         if line == "":
             line = f.readline().rstrip('\n')
@@ -36,6 +44,26 @@ def get_adjectives(f):
             adjectives[current_emotion].append(line)
         line = f.readline().rstrip('\n')
     return adjectives
+
+def get_adjectives_effect(f):
+    '''Maps emotions to adjectives'''
+    adjectives_effect = {}
+    current_emotion = ""
+    line = f.readline().rstrip('\n')
+    while line != "END ADJECTIVES-EFFECT":
+        #ignore blank lines
+        if line == "":
+            line = f.readline().rstrip('\n')
+            continue
+        if line[:10] == "Emotion = ":
+            current_emotion = line[10:]
+            #create dictionary entry for this emotion
+            adjectives_effect[current_emotion] = []
+        else:
+            #add this line to the list of definitions for the emotion
+            adjectives_effect[current_emotion].append(line)
+        line = f.readline().rstrip('\n')
+    return adjectives_effect
 
 def get_adverbs(f):
     '''Maps emotions to adjectives'''
@@ -110,6 +138,7 @@ def get_tweet_dictionary(f):
         line = f.readline().rstrip('\n')
     return tweet_dictionary
 
+'''Parse the test_database.txt file'''
 f = open("test_database.txt", "r")
 line = f.readline().rstrip('\n')
 while line != "END SCRIPT":
@@ -129,9 +158,12 @@ while line != "END SCRIPT":
     if line == "EMOTION RATIOS":
         emotion_ratios = get_emotion_ratios(f)
         print(emotion_ratios)
-    elif line == "ADJECTIVES":
-        adjectives = get_adjectives(f)
-        print(adjectives)
+    elif line == "ADJECTIVES-CAUSE":
+        adjectives_cause = get_adjectives_cause(f)
+        print(adjectives_cause)
+    elif line == "ADJECTIVES-EFFECT":
+        adjectives_effect = get_adjectives_effect(f)
+        print(adjectives_effect)
     elif line == "ADVERBS":
         adverbs = get_adverbs(f)
         print(adverbs)
