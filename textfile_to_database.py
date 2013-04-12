@@ -138,8 +138,8 @@ def get_tweet_dictionary(f):
         line = f.readline().rstrip('\n')
     return tweet_dictionary
 
-'''Parse the test_database.txt file'''
-f = open("test_database.txt", "r")
+'''Parse the twitter_database.txt file'''
+f = open("twitter_database.txt", "r")
 line = f.readline().rstrip('\n')
 while line != "END SCRIPT":
     #ignore comments
@@ -154,27 +154,27 @@ while line != "END SCRIPT":
         continue
     
     #use the line to determine what to do
-    print(line)
+    #print(line)
     if line == "EMOTION RATIOS":
         emotion_ratios = get_emotion_ratios(f)
-        print(emotion_ratios)
+        #print(emotion_ratios)
     elif line == "ADJECTIVES-CAUSE":
         adjectives_cause = get_adjectives_cause(f)
-        print(adjectives_cause)
+        #print(adjectives_cause)
     elif line == "ADJECTIVES-EFFECT":
         adjectives_effect = get_adjectives_effect(f)
-        print(adjectives_effect)
+        #print(adjectives_effect)
     elif line == "ADVERBS":
         adverbs = get_adverbs(f)
-        print(adverbs)
+        #print(adverbs)
     elif line == "HASHTAG GENERIC":
         hashtag_generic = get_hashtag_generic(f)
-        print(hashtag_generic)
+        #print(hashtag_generic)
     elif line == "HASHTAG EMOTION":
         hashtag_emotion = get_hashtag_emotion(f)
-        print(hashtag_emotion)
+        #print(hashtag_emotion)
     elif line == "TWEET DICTIONARY":
         tweet_dictionary = get_tweet_dictionary(f)
-        print(tweet_dictionary)
+        #print(tweet_dictionary)
     line = f.readline().rstrip('\n')
 f.close()

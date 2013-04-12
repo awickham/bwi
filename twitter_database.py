@@ -1,4 +1,5 @@
 from random import *
+from textfile_to_database import *
 
 '''
 Created on Apr 6, 2013
@@ -13,29 +14,23 @@ def get_trending_topics():
     
 current_emotion = ""
 
-emotion_ratios = {":)": 1,
-                  ":(": 1}
+'''emotion_ratio, adjectives_cause, adjectives_effect, adverbs, hashtag_generic,
+hashtag_emotion, and tweet_dictionary set by textfile_to_database.py'''
 
-adjectives = {":)": ["happy", "great", "pleasant", "lovely"],
-              ":(": ["sad", "depressing", "unpleasant"]}
-
-emotions = list(adjectives.keys())
-
-tweet_outline = {"turned_on": ["Just woke up. Today is going to be a <adj> day! <emoticon>"],
-                 "bored": ["*sigh* I'm just <adv_-.-_:|> sitting here... <emoticon>\n<hashtag_emotion>"],
-                 "default": ["I don't have an opinion on this, but everyone else is doing it, so...\n<hashtag_trending>"]}
+emotions = list(emotion_ratios.keys())
 
 '''Resets the current emotion based on their ratios'''
-def set_emotion(emotions):
+def set_emotion():
     global emotion_ratios
     global current_emotion
+    global emotions
     #the index of the chosen emotion will be >= the random number chosen,
     #which must be greater than the ranges below it
-    emotion_ranges = [emotion_ratios[emotions[0]]]
+    emotion_ranges = [int(emotion_ratios[emotions[0]])]
     #each range corresponds to an emotion here
     corresponding_emotions = [emotions[0]]
     for emotion in emotions[1:]:
-        emotion_ranges.append(emotion_ranges[-1] + emotion_ratios[emotion])
+        emotion_ranges.append(int(emotion_ranges[-1]) + int(emotion_ratios[emotion]))
         corresponding_emotions.append(emotion)
     random = randint(emotion_ranges[0], emotion_ranges[-1])
     #anything set to 0 odds should not have a chance to be picked
@@ -43,29 +38,39 @@ def set_emotion(emotions):
         random = 1
     for i, x in enumerate(emotion_ranges):
         if x >= random:
-            current_emotion = corresponding_emotions[i]
-            break
+            return corresponding_emotions[i]
 
-'''Picks an adjective correlated to one of the given emotions, based on their ratios'''
-def get_adjective(emotion_list):
-    global adjectives
+'''Picks an adjective (cause) correlated to one of the given emotions, based on their ratios'''
+def get_adjective_cause():
+    global adjectives_cause
     global current_emotion
     if current_emotion == "":
-        set_emotion(emotion_list)
+        current_emotion = set_emotion()
     #choose random adj based on emotion
-    possible_adjs = adjectives[current_emotion]
+    possible_adjs = adjectives_cause[current_emotion]
+    return choice(possible_adjs)
+
+'''Picks an adjective (effect) correlated to one of the given emotions, based on their ratios'''
+def get_adjective_effect():
+    global adjectives_effect
+    global current_emotion
+    if current_emotion == "":
+        current_emotion = set_emotion()
+    #choose random adj based on emotion
+    possible_adjs = adjectives_effect[current_emotion]
     return choice(possible_adjs)
 
 '''Picks an emoticon from a list of possible emotions, based on their ratios'''
-def get_emoticon(emotion_list):
+def get_emoticon():
     global adjectives
     global current_emotion
     if current_emotion == "":
-        set_emotion(emotion_list)
+        current_emotion = set_emotion()
     return current_emotion
 
 '''Maps dynamic tokens to functions that generate their content'''
-translated_token = {"adj": get_adjective,
+translated_token = {"adj-cause": get_adjective_cause,
+		    "adj-effect": get_adjective_effect,
                     "emoticon": get_emoticon}
 
 '''Determines if the given token is enclosed by < and >'''
@@ -95,7 +100,7 @@ def parse_token(token):
     if token_type in translated_token: #token is defined
         #get function to generate token content
         transform_token = translated_token[token_type]
-        return str_before + transform_token(emotions) + str_after
+        return str_before + transform_token() + str_after
     #token undefined
     return str_before + "<" + token + ">" + str_after
 
@@ -124,5 +129,5 @@ def parse_tweet(tweet):
         else: parsed_tweet += " " + parse_token(x)
     return parsed_tweet
 
-
-print(parse_tweet("This is such a <adj>, <adj> day <emoticon>"))
+print parse_tweet("This is such a <adj-cause>, <adj-cause> day! <emoticon>")
+print parse_tweet(choice(tweet_dictionary["turned_on"]))

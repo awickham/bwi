@@ -56,11 +56,13 @@ horrific
 Emotion = :/
 regretful
 boring
+sad
 
 Emotion = -.-
 boring
 tedious
 tiresome
+unamusing
 
 Emotion = :s
 scary
@@ -103,11 +105,13 @@ upset
 Emotion = :/
 bored
 uncertain
+sad
 
 Emotion = -.-
 tired
 exhausted
 bored
+unamused
 
 Emotion = :s
 frightened
@@ -209,7 +213,7 @@ by dynamic content at runtime.
 ***END COMMENT***
 TWEET DICTIONARY
 Key = turned_on
-Just woke up. Today is going to be a <adj> day! <emoticon>
+Just woke up. Today is going to be a <adj-cause> day. <emoticon>
 
 Key = bored
 *sigh* I'm just <adv_-.-_:/> sitting here... <emoticon> <hashtag_emotion>
