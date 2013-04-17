@@ -62,7 +62,7 @@ def getApi(compName):
 
 def callback(message):
     #splits the message into multiple tweets if > 140 characters
-    api.PostUpdates(message.data)
+    #api.PostUpdates(message.data)
     rospy.loginfo("Tweeted the following message(s): %s", message.data)
 
 def listener():
