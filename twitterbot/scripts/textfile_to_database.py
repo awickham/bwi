@@ -5,6 +5,7 @@ Created on Apr 7, 2013
 '''
 
 import os
+import urllib2
 
 emotion_ratios = {}
 adjectives_cause = {}
@@ -140,8 +141,8 @@ def get_tweet_dictionary(f):
         line = f.readline().rstrip('\n')
     return tweet_dictionary
 
-'''Parse the twitter_database.txt file'''
-f = open(os.path.dirname(os.path.realpath(__file__)) + "/twitter_database.txt", "r")
+'''Parse the twitter_database.txt file from GitHub'''
+f = urllib2.urlopen('https://github.com/awickham/bwi/raw/master/twitterbot/scripts/twitter_database.txt')
 line = f.readline().rstrip('\n')
 while line != "END SCRIPT":
     #ignore comments
