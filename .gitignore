@@ -2,3 +2,5 @@
 *.swp
 *.*~
 .vim
+# ignore compiled python files
+.pyc
