@@ -4,6 +4,8 @@ Created on Apr 7, 2013
 @author: Tony
 '''
 
+import os
+
 emotion_ratios = {}
 adjectives_cause = {}
 adjectives_effect = {}
@@ -139,7 +141,7 @@ def get_tweet_dictionary(f):
     return tweet_dictionary
 
 '''Parse the twitter_database.txt file'''
-f = open("twitter_database.txt", "r")
+f = open(os.path.dirname(os.path.realpath(__file__)) + "/twitter_database.txt", "r")
 line = f.readline().rstrip('\n')
 while line != "END SCRIPT":
     #ignore comments
