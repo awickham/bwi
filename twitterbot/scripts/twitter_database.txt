@@ -213,7 +213,7 @@ by dynamic content at runtime.
 ***END COMMENT***
 TWEET DICTIONARY
 Key = turned_on
-Just woke up. Today is going to be a <adj-cause> day. <emoticon>
+Hello, world!. Today is going to be a <adj-cause> day. <emoticon>
 
 Key = turned_off
 Goodbye.
