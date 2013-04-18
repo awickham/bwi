@@ -84,7 +84,7 @@ def get_hashtag_generic():
     return choice(hashtag_generic)
 
 '''Picks a hashtag correlated to one of the given emotions, based on their ratios'''
-def get_hastag_emotion():
+def get_hashtag_emotion():
     global hashtag_emotion
     global current_emotion
     if current_emotion == "":
