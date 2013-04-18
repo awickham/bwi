@@ -213,16 +213,13 @@ by dynamic content at runtime.
 ***END COMMENT***
 TWEET DICTIONARY
 Key = turned_on
-Hello, world!. Today is going to be a <adj-cause> day. <emoticon>
+Hello, world! Today is going to be a <adj-cause> day. <emoticon>
 
 Key = turned_off
 Goodbye.
 
 Key = bored
 *sigh* I'm just <adv_-.-_:/> sitting here... <emoticon> <hashtag-emotion>
-
-Key = testing
-Think I did well in my presentation today! <hashtag-emotion_:)_:D> <hashtag-generic>
 
 Key = default
 I don't have an opinion on this, but everyone else is doing it, so... <hashtag-trending>

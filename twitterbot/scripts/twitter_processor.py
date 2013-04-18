@@ -3,7 +3,6 @@ import roslib; roslib.load_manifest('twitterbot')
 import rospy
 from std_msgs.msg import String
 
-import twitter_database
 from twitter_database import *
 from random import choice
 
@@ -17,7 +16,7 @@ def pub_tweet():
     # update global variables
     global twitter_task
     # figure out what to tweet
-    tweet = twitter_database.parse_tweet(choice(tweet_dictionary[twitter_task])) #TODO
+    tweet = choice(tweet_dictionary[twitter_task]) #TODO
     global tweet_history
     tweet_history.append(tweet)
     global time_of_last_tweet

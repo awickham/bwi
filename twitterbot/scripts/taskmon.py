@@ -14,6 +14,7 @@ pub = rospy.Publisher("twitter_task", String)
 def talker():
     pub = rospy.Publisher("twitter_task", String)
     rospy.init_node("taskmon")
+    pub.publish("turned_on")
     while not rospy.is_shutdown():
         updateState()
         time.sleep(10)
@@ -22,7 +23,7 @@ def updateState():
     # Taken from rosnode source to be a little less general and more efficient
     global pub
     global runningNodes
-    master = rosgraph.masterapi.Master('rosgraph', master_uri="http://128.83.122.157:11311/")
+    master = rosgraph.masterapi.Master('rosgraph', master_uri="http://128.83.122.175:11311/")
     try:
         state = master.getSystemState()
     except socket.error:

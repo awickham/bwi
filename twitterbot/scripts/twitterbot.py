@@ -4,6 +4,7 @@ import rospy
 from std_msgs.msg import String
 import twitter
 import platform #to check computer name
+from twitter_database import parse_tweet
 
 #credentials
 ebooks_consumer_key = 'B9mwrhOkQ65oE50JrEuw'
@@ -62,8 +63,9 @@ def getApi(compName):
 
 def callback(message):
     #splits the message into multiple tweets if > 140 characters
-    api.PostUpdates(message.data)
-    rospy.loginfo("Tweeted the following message(s): %s", message.data)
+    tweet = parse_tweet(message.data)
+    api.PostUpdates(tweet)
+    rospy.loginfo("Tweeted the following message(s): %s", tweet)
 
 def listener():
     rospy.init_node('twitterbot', anonymous=False)
