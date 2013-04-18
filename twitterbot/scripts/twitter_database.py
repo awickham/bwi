@@ -128,6 +128,3 @@ def parse_tweet(tweet):
                 parsed_tweet += " a"
         else: parsed_tweet += " " + parse_token(x)
     return parsed_tweet
-
-print parse_tweet("This is such a <adj-cause>, <adj-cause> day! <emoticon>")
-print parse_tweet(choice(tweet_dictionary["turned_on"]))
