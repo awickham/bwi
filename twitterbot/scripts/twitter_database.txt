@@ -215,6 +215,9 @@ TWEET DICTIONARY
 Key = turned_on
 Just woke up. Today is going to be a <adj-cause> day. <emoticon>
 
+Key = turned_off
+Goodbye.
+
 Key = bored
 *sigh* I'm just <adv_-.-_:/> sitting here... <emoticon> <hashtag_emotion>
 

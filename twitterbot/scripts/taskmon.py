@@ -13,6 +13,9 @@ pub = rospy.Publisher("twitter_task", String)
 
 def talker():
     global pub
+
+def talker():
+    pub = rospy.Publisher("twitter_task", String)
     rospy.init_node("taskmon")
     while not rospy.is_shutdown():
         updateState()
