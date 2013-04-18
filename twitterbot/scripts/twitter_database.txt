@@ -219,10 +219,10 @@ Key = turned_off
 Goodbye.
 
 Key = bored
-*sigh* I'm just <adv_-.-_:/> sitting here... <emoticon> <hashtag_emotion>
+*sigh* I'm just <adv_-.-_:/> sitting here... <emoticon> <hashtag-emotion>
 
 Key = default
-I don't have an opinion on this, but everyone else is doing it, so... <hashtag_trending>
+I don't have an opinion on this, but everyone else is doing it, so... <hashtag-trending>
 END TWEET DICTIONARY
 
 END SCRIPT

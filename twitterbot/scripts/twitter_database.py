@@ -60,6 +60,16 @@ def get_adjective_effect():
     possible_adjs = adjectives_effect[current_emotion]
     return choice(possible_adjs)
 
+'''Picks an adverb correlated to one of the given emotions, based on their ratios'''
+def get_adverb():
+    global adverbs
+    global current_emotion
+    if current_emotion == "":
+        current_emotion = set_emotion()
+    #choose random adv based on emotion
+    possible_advs = adverbs[current_emotion]
+    return choice(possible_advs)
+
 '''Picks an emoticon from a list of possible emotions, based on their ratios'''
 def get_emoticon():
     global adjectives
@@ -68,10 +78,28 @@ def get_emoticon():
         current_emotion = set_emotion()
     return current_emotion
 
+'''Picks a generic hashtag at random'''
+def get_hashtag_generic():
+    global hashtag_generic
+    return choice(hashtag_generic)
+
+'''Picks a hashtag correlated to one of the given emotions, based on their ratios'''
+def get_hastag_emotion():
+    global hashtag_emotion
+    global current_emotion
+    if current_emotion == "":
+        current_emotion = set_emotion()
+    #choose random adj based on emotion
+    possible_hashtags = hashtag_emotion[current_emotion]
+    return choice(possible_hashtags)
+
 '''Maps dynamic tokens to functions that generate their content'''
 translated_token = {"adj-cause": get_adjective_cause,
 		    "adj-effect": get_adjective_effect,
-                    "emoticon": get_emoticon}
+		    "adv": get_adverb,
+                    "emoticon": get_emoticon,
+		    "hashtag-generic": get_hashtag_generic,
+		    "hashtag-emotion": get_hashtag_emotion}
 
 '''Determines if the given token is enclosed by < and >'''
 def is_dynamic(token):    
