@@ -12,9 +12,6 @@ runningNodes = set()
 pub = rospy.Publisher("twitter_task", String)
 
 def talker():
-    global pub
-
-def talker():
     pub = rospy.Publisher("twitter_task", String)
     rospy.init_node("taskmon")
     while not rospy.is_shutdown():
@@ -30,25 +27,25 @@ def updateState():
         state = master.getSystemState()
     except socket.error:
         raise ROSNodeIOException("Unable to communicate with master!")
-    nodes = set()
+    currentNodes = set()
     for s in state: # one of publishers, subscribers, or services
         for t, l in s: # topics and participants of topics
             for node in l:
+                currentNodes.add(node)
                 if not node in runningNodes:
                     pub.publish("new node %s appeared" % node)
-                    if node == "segbot_gazebo":
+                    if node == "/segway_rmp_node":
                         pub.publish("turned_on")
                     runningNodes.add(node)
     nodesToRemove = []
     for node in runningNodes:
-        if not node in nodes:
+        if not node in currentNodes:
             pub.publish("old node %s vanished" % node)
-            if node == "segbot_gazebo":
+            if node == "/segway_rmp_node":
                 pub.publish("turned_off")
             nodesToRemove.append(node)
     for node in nodesToRemove:
         runningNodes.remove(node)
-
 
 if __name__ == "__main__":
     talker()
