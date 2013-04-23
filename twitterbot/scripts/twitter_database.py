@@ -93,6 +93,13 @@ def get_hashtag_emotion():
     possible_hashtags = hashtag_emotion[current_emotion]
     return choice(possible_hashtags)
 
+'''Returns a param from a list of passed params'''
+def get_param(param_index_and_name, *params):
+    equal_index = param_index_and_name.find("=")
+    #if '=' isn't found, the param has no name
+    param_index = int(param_index_and_name) if equal_index == -1 else int(param_index_and_name[:equal_index])
+    return params[param_index]
+
 '''Maps dynamic tokens to functions that generate their content'''
 translated_token = {"adj-cause": get_adjective_cause,
 		    "adj-effect": get_adjective_effect,
@@ -107,7 +114,7 @@ def is_dynamic(token):
 
 '''If the token is dynamic, this replaces it with an adjective, emoticon,
 etc. accordingly'''
-def parse_token(token):
+def parse_token(token, *params):
     #nothing to parse if not a token
     if not is_dynamic(token):
         return token
@@ -122,6 +129,8 @@ def parse_token(token):
     
     token_components = token.split("_")
     token_type = token_components[0]
+    if token_type == "param":
+	return str_before + get_param(token_components[1], *params) + str_after
     if len(token_components) > 1: #there are specified emotions to choose from
         global current_emotion
         current_emotion = choice(token_components[1:])
@@ -135,13 +144,13 @@ def parse_token(token):
 '''Iterates over and parses the tokens (words) of the given string. If the word
 "a" is followed by a dynamic token, that token is parsed to determine if it
 should be changed to "an"'''
-def parse_tweet(tweet):
+def parse_tweet(tweet, *params):
     if len(tweet) == 0:
         return ""
     global current_emotion
     current_emotion = ""
     tokens = tweet.split(" ")
-    parsed_tweet = parse_token(tokens[0])
+    parsed_tweet = parse_token(tokens[0], *params)
     tokens = tokens[1:]
     for i, x in enumerate(tokens):
         if x == '':
@@ -149,10 +158,10 @@ def parse_tweet(tweet):
         if x == "a":
             #determine if we should make it 'an'
             #note: assuming we won't end a tweet with 'a'
-            tokens[i + 1] = parse_token(tokens[i + 1])
+            tokens[i + 1] = parse_token(tokens[i + 1], *params)
             if tokens[i + 1][0] in "AEIOUaeiou":
                 parsed_tweet += " an"
             else:
                 parsed_tweet += " a"
-        else: parsed_tweet += " " + parse_token(x)
+        else: parsed_tweet += " " + parse_token(x, *params)
     return parsed_tweet
