@@ -7,6 +7,8 @@ Created on Apr 7, 2013
 import os
 import urllib2
 
+url_of_twitter_database_txt = 'https://github.com/awickham/bwi/raw/master/twitterbot/scripts/twitter_database.txt'
+
 emotion_ratios = {}
 adjectives_cause = {}
 adjectives_effect = {}
@@ -14,6 +16,12 @@ adverbs = {}
 hashtag_generic = []
 hashtag_emotion = {}
 tweet_dictionary = {}
+
+#weather stuff
+weather_positive = {}
+weather_negative = {}
+weather_neutral = {}
+weather_params = ["<high-temp>", "<low-temp>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<cloud-coverage-amount>", "<sky-description>"]
 
 def get_emotion_ratios(f):
     '''Maps emotions to ratios'''
@@ -121,6 +129,69 @@ def get_hashtag_emotion(f):
         line = f.readline().rstrip('\n')
     return hashtag_emotion
 
+def get_weather_positive(f):
+    '''Maps weather parameters to positive tweets'''
+    weather_positive = {}
+    line = f.readline().rstrip('\n')
+    while line != "END WEATHER POSITIVE":
+	#ignore blank lines
+        if line == "":
+            line = f.readline().rstrip('\n')
+            continue
+	#loop through list of weather params and map them to tweets that use them
+	global weather_params
+	for param in weather_params:
+	    if line.find(param) == -1:
+		continue
+	    else:
+		if param not in weather_positive.keys():
+		    weather_positive[param] = []
+		weather_positive[param].append(line)
+	line = f.readline().rstrip('\n')
+    return weather_positive
+
+def get_weather_negative(f):
+    '''Maps weather parameters to negative tweets'''
+    weather_negative = {}
+    line = f.readline().rstrip('\n')
+    while line != "END WEATHER NEGATIVE":
+	#ignore blank lines
+        if line == "":
+            line = f.readline().rstrip('\n')
+            continue
+	#loop through list of weather params and map them to tweets that use them
+	global weather_params
+	for param in weather_params:
+	    if line.find(param) == -1:
+		continue
+	    else:
+		if param not in weather_negative.keys():
+		    weather_negative[param] = []
+		weather_negative[param].append(line)
+	line = f.readline().rstrip('\n')
+    return weather_negative
+
+def get_weather_neutral(f):
+    '''Maps weather parameters to neutral tweets'''
+    weather_neutral = {}
+    line = f.readline().rstrip('\n')
+    while line != "END WEATHER NEUTRAL":
+	#ignore blank lines
+        if line == "":
+            line = f.readline().rstrip('\n')
+            continue
+	#loop through list of weather params and map them to tweets that use them
+	global weather_params
+	for param in weather_params:
+	    if line.find(param) == -1:
+		continue
+	    else:
+		if param not in weather_neutral.keys():
+		    weather_neutral[param] = []
+		weather_neutral[param].append(line)
+	line = f.readline().rstrip('\n')
+    return weather_neutral
+
 def get_tweet_dictionary(f):
     '''Maps keys to tweets'''
     tweet_dictionary = {}
@@ -142,7 +213,7 @@ def get_tweet_dictionary(f):
     return tweet_dictionary
 
 '''Parse the twitter_database.txt file from GitHub'''
-f = urllib2.urlopen('https://github.com/awickham/bwi/raw/master/twitterbot/scripts/twitter_database.txt')
+f = urllib2.urlopen(url_of_twitter_database_txt)
 line = f.readline().rstrip('\n')
 while line != "END SCRIPT":
     #ignore comments
@@ -176,6 +247,15 @@ while line != "END SCRIPT":
     elif line == "HASHTAG EMOTION":
         hashtag_emotion = get_hashtag_emotion(f)
         #print(hashtag_emotion)
+    elif line == "WEATHER POSITIVE":
+	weather_positive = get_weather_positive(f)
+	#print(weather_positive)
+    elif line == "WEATHER NEGATIVE":
+	weather_negative = get_weather_negative(f)
+	#print(weather_negative)
+    elif line == "WEATHER NEUTRAL":
+	weather_neutral = get_weather_neutral(f)
+	#print(weather_neutral)
     elif line == "TWEET DICTIONARY":
         tweet_dictionary = get_tweet_dictionary(f)
         #print(tweet_dictionary)

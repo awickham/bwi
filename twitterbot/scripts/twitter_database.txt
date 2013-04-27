@@ -214,8 +214,8 @@ tweets of the corresponding temperament that include parameters such as
 other dynamic token. Additionally, tweets from this list will only be
 considered if its parameters match the temperament they are under - for
 instance, "Loving this <sky-description> sky!" under WEATHER POSITIVE will only
-be tweeted if <sky-description> is a positive description such as "sunny"; that way,
-it won't tweet something ridiculous like "Loving this overcast sky!".
+be tweeted if <sky-description> is a positive description such as "sunny"; that
+way, it won't tweet something ridiculous like "Loving this overcast sky!".
 ***END COMMENT***
 WEATHER POSITIVE
 Loving this <sky-description> sky!
