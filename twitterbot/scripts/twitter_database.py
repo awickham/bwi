@@ -19,6 +19,9 @@ hashtag-emotion, and tweet_dictionary set by textfile_to_database.py'''
 
 emotions = list(emotion_ratios.keys())
 
+#stores text contained in quotes
+quotes = []
+
 '''Resets the current emotion based on their ratios'''
 def set_emotion():
     global emotion_ratios
@@ -93,6 +96,13 @@ def get_hashtag_emotion():
     possible_hashtags = hashtag_emotion[current_emotion]
     return choice(possible_hashtags)
 
+'''Returns a body of text, possibly based on emotions'''
+def parse_text(options, *params):
+    #note: assuming options are all plain text or all based on emotions
+    first_char = options[0][0]
+    if first_char == '"': #dealing with plain text; pick one at random
+        return 
+    
 '''Returns a param from a list of passed params'''
 def get_param(param_index_and_name, *params):
     equal_index = param_index_and_name.find("=")
@@ -137,8 +147,12 @@ def parse_token(token, *params):
     token_components = token.split("_")
     token_type = token_components[0]
     if token_type == "param":
-	return str_before + get_param(token_components[1], *params) + str_after
-    if len(token_components) > 1: #there are specified emotions to choose from
+        return str_before + get_param(token_components[1], *params) + str_after
+    elif token_type == "text":
+        if len(token_components) == 1: #there are no parameters
+            return "<text>"
+        return str_before + parse_text(token_components[1:], *params) + str_after
+    elif len(token_components) > 1: #there are specified emotions to choose from
         global current_emotion
         current_emotion = choice(token_components[1:])
     if token_type in translated_token: #token is defined
@@ -148,6 +162,32 @@ def parse_token(token, *params):
     #token undefined
     return str_before + "<" + token + ">" + str_after
 
+'''Replaces text in quotes with a dynamic token <quote_index> that refers to
+quotes[index] (which will store the original text)'''
+def group_quotes(string):
+    x = 0
+    length = len(string)
+    while x < length:
+        if string[x] == '"': #found opening quotation mark
+            #store index of closing quotation mark
+            close_index = string[x + 1:].find('"') + x + 1
+            if close_index == -1: #there's no closing quote
+                break
+            else:
+                dynamic_token = "<quote_" + str(len(quotes)) + ">"
+                #add text to quotes list, including quotation marks
+                quotes.append(string[x:close_index + 1])
+                #replace text with dynamic token
+                string = string[:x] + dynamic_token + string[close_index + 1:]
+                #skip over new token
+                x += len(dynamic_token)
+                #reset length
+                length = len(string)
+                print(quotes)
+        else:
+            x += 1
+    return string
+
 '''Iterates over and parses the tokens (words) of the given string. If the word
 "a" is followed by a dynamic token, that token is parsed to determine if it
 should be changed to "an"'''
@@ -156,6 +196,7 @@ def parse_tweet(tweet, *params):
         return ""
     global current_emotion
     current_emotion = ""
+    tweet = group_quotes(tweet)
     tokens = tweet.split(" ")
     parsed_tweet = ""
     for i, x in enumerate(tokens):
@@ -187,4 +228,4 @@ def parse_tweet(tweet, *params):
                 parsed_tweet += space + token
     return parsed_tweet
 
-print parse_tweet("A <adj-cause> day is upon us! <emoticon|hashtag-generic|hashtag-emotion|>")
+print parse_tweet('Hey there "mister how are you today?" "great"!')
