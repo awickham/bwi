@@ -102,11 +102,11 @@ def get_param(param_index_and_name, *params):
 
 '''Maps dynamic tokens to functions that generate their content'''
 translated_token = {"adj-cause": get_adjective_cause,
-		    "adj-effect": get_adjective_effect,
-		    "adv": get_adverb,
-                    "emoticon": get_emoticon,
-		    "hashtag-generic": get_hashtag_generic,
-		    "hashtag-emotion": get_hashtag_emotion}
+            "adj-effect": get_adjective_effect,
+            "adv": get_adverb,
+            "emoticon": get_emoticon,
+            "hashtag-generic": get_hashtag_generic,
+            "hashtag-emotion": get_hashtag_emotion}
 
 '''Determines if the given token is enclosed by < and >'''
 def is_dynamic(token):    
@@ -123,9 +123,16 @@ def parse_token(token, *params):
     index_close = token.find(">")
     str_before = token[:index_open]
     str_after = ""
+    #if there is text after the ">", save it in str_after
     if len(token) > index_close + 1:
         str_after = token[index_close + 1:]
     token = token[index_open + 1:index_close]
+    
+    #if there are any |'s pick a token at random
+    token = choice(token.split("|"))
+    #omit token if blank
+    if token == "":
+        return ""
     
     token_components = token.split("_")
     token_type = token_components[0]
@@ -150,18 +157,34 @@ def parse_tweet(tweet, *params):
     global current_emotion
     current_emotion = ""
     tokens = tweet.split(" ")
-    parsed_tweet = parse_token(tokens[0], *params)
-    tokens = tokens[1:]
+    parsed_tweet = ""
     for i, x in enumerate(tokens):
         if x == '':
             continue
-        if x == "a":
-            #determine if we should make it 'an'
-            #note: assuming we won't end a tweet with 'a'
+        #don't have space before first token (still need to compute it here in
+        #case the first token is "a")
+        if i == 0:
+            space = ""
+        else:
+            space = " "
+        if (x == "a" or x == "A") and len(tokens) > i + 1:
+            #determine if we should make it 'an' by computing next token
             tokens[i + 1] = parse_token(tokens[i + 1], *params)
-            if tokens[i + 1][0] in "AEIOUaeiou":
-                parsed_tweet += " an"
+            if tokens[i + 1] == "":
+                parsed_tweet += space + x #x is "a" or "A"
+            elif tokens[i + 1][0] in "AEIOUaeiou":
+                #keep case
+                if x == "a": 
+                    parsed_tweet += space + "an"
+                else:
+                    parsed_tweet += space + "An"
             else:
-                parsed_tweet += " a"
-        else: parsed_tweet += " " + parse_token(x, *params)
+                parsed_tweet += space + x #x is "a" or "A"
+        else:
+            token = parse_token(x, *params)
+            #don't have a space for blank or initial token
+            if token != "":
+                parsed_tweet += space + token
     return parsed_tweet
+
+print parse_tweet("A <adj-cause> day is upon us! <emoticon|>")
