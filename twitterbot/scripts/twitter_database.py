@@ -174,7 +174,7 @@ def group_quotes(string):
             if close_index == -1: #there's no closing quote
                 break
             else:
-                dynamic_token = "<quote_" + str(len(quotes)) + ">"
+                dynamic_token = "<quote-" + str(len(quotes)) + ">"
                 #add text to quotes list, including quotation marks
                 quotes.append(string[x:close_index + 1])
                 #replace text with dynamic token
@@ -183,7 +183,6 @@ def group_quotes(string):
                 x += len(dynamic_token)
                 #reset length
                 length = len(string)
-                print(quotes)
         else:
             x += 1
     return string
@@ -228,4 +227,4 @@ def parse_tweet(tweet, *params):
                 parsed_tweet += space + token
     return parsed_tweet
 
-print parse_tweet('Hey there "mister how are you today?" "great"!')
+print parse_tweet('<test_"hi there"_"bye there">')
