@@ -122,9 +122,16 @@ translated_token = {"adj-cause": get_adjective_cause,
 def is_dynamic(token):    
     return len(token) > 0 and token.find("<") != -1 and token.find(">") != -1
 
+def is_quote(token_type):
+    #must say at least "quote-0" (7 characters) to be a quote token
+    if len(token_type) < 7:
+        return False
+    return token_type[:5] == "quote" and token_type[5] == "-"
+
 '''If the token is dynamic, this replaces it with an adjective, emoticon,
 etc. accordingly'''
 def parse_token(token, *params):
+    global quotes
     #nothing to parse if not a token
     if not is_dynamic(token):
         return token
@@ -148,6 +155,9 @@ def parse_token(token, *params):
     token_type = token_components[0]
     if token_type == "param":
         return str_before + get_param(token_components[1], *params) + str_after
+    elif is_quote(token_type):
+        quote_index = int(token_type[token_type.find('-') + 1:])
+        return str_before + quotes[quote_index] + str_after
     elif token_type == "text":
         if len(token_components) == 1: #there are no parameters
             return "<text>"
@@ -175,12 +185,12 @@ def group_quotes(string):
                 break
             else:
                 dynamic_token = "<quote-" + str(len(quotes)) + ">"
-                #add text to quotes list, including quotation marks
-                quotes.append(string[x:close_index + 1])
+                #add text to quotes list, excluding quotation marks
+                quotes.append(string[x + 1:close_index])
                 #replace text with dynamic token
-                string = string[:x] + dynamic_token + string[close_index + 1:]
+                string = string[:x + 1] + dynamic_token + string[close_index:]
                 #skip over new token
-                x += len(dynamic_token)
+                x += len(dynamic_token) + 2
                 #reset length
                 length = len(string)
         else:
@@ -227,4 +237,4 @@ def parse_tweet(tweet, *params):
                 parsed_tweet += space + token
     return parsed_tweet
 
-print parse_tweet('<test_"hi there"_"bye there">')
+print parse_tweet('<"hi there">')
