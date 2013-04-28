@@ -14,8 +14,8 @@ def get_trending_topics():
     
 current_emotion = ""
 
-'''emotion_ratio, adjectives_cause, adjectives_effect, adverbs, hashtag_generic,
-hashtag_emotion, and tweet_dictionary set by textfile_to_database.py'''
+'''emotion_ratio, adjectives_cause, adjectives_effect, adverbs, hashtag-generic,
+hashtag-emotion, and tweet_dictionary set by textfile_to_database.py'''
 
 emotions = list(emotion_ratios.keys())
 
@@ -187,4 +187,4 @@ def parse_tweet(tweet, *params):
                 parsed_tweet += space + token
     return parsed_tweet
 
-print parse_tweet("A <adj-cause> day is upon us! <emoticon|>")
+print parse_tweet("A <adj-cause> day is upon us! <emoticon|hashtag-generic|hashtag-emotion|>")
