@@ -48,10 +48,10 @@ def set_emotion():
 def set_emotion_from_list(list):
     global emotions
     temp = emotions
+    #set possible emotions to be only those in the list
     emotions = list
     set_emotion()
-    global current_emotion
-    print("current emotion: " + current_emotion)
+    #restore emotions to complete list
     emotions = temp
 
 '''Picks an adjective (cause) correlated to one of the given emotions, based on their ratios'''
@@ -123,7 +123,7 @@ def parse_text(options, *params):
             #remove quotes from text
             text = x[equal_index + 2:-1]
             dictionary[emotion] = text
-        current_emotion = choice(dictionary.keys())
+        set_emotion_from_list(dictionary.keys())
         return parse_token(dictionary[current_emotion])
     
 '''Returns a param from a list of passed params'''
@@ -261,5 +261,4 @@ def parse_tweet(tweet, *params):
                 parsed_tweet += space + token
     return parsed_tweet
 
-print parse_tweet('<text_:)="hi there!"_:(="oh, goodbye!"> <emoticon>')
-set_emotion_from_list([':)'])
+print parse_tweet('<text_:)="yay I\'m so happy!!"_:(="boo this sucks"> <emoticon> <adj-cause_:(> <emoticon>')
