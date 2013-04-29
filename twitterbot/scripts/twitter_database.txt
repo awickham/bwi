@@ -227,18 +227,18 @@ WEATHER POSITIVE
 Loving this <sky-description> sky!
 Ah, a high of <high-temp> and a low of <low-temp>! Not too hot and not too cold. <emoticon_:)_:D_<3|hashtag-emotion_:)_:D_<3>
 I can tell today is going to be a <adj-cause_:)_:D> day! <sky-description> skies, a high of <high-temp> and <precip-amount> rain! <emoticon_:)_:D>
-It's a beautiful <current-temp>° outside and I am just loving life! <emoticon_:)_<3> <hashtag-emotion_:)> <hashtag-emotion_<3>
+It's a beautiful <current-temp> degrees outside and I am just loving life! <emoticon_:)_<3> <hashtag-emotion_:)> <hashtag-emotion_<3>
 END WEATHER POSITIVE
 
 WEATHER NEGATIVE
-Ugh, <precip-amount> rain! <precip-inches> inches expected today. <emoticon_:(_:'(_:/>
+Ugh, there's <precip-amount> rain! <precip-inches> inches expected today. <emoticon_:(_:'(_:/>
 I can't see the sun. <emoticon_:(_:/> The clouds are covering <cloud-coverage-percent>% of the sky. <emoticon_:(_:/_:'(>
-A high of <high-temp> degrees?! My motors are going to refuse to move! <hashtag-emotion_:s_:/_:(_:'(>
+A high of <high-temp> degrees and a low of <low-temp>?! My motors are going to refuse to move! <hashtag-emotion_:s_:/_:(_:'(>
 I'm glad I don't sweat... today's high is <high-temp> and there is <humidity-percent>% humidity. <emoticon_:(_:/|> <text_:)="Maybe that means more people will be inside to visit me! :)"_:(="What a sucky day!">
 END WEATHER NEGATIVE
 
 WEATHER NEUTRAL
-Well, the weather is so-so. High of <high-temp> and low of <low-temp>. Plus <cloud-coverage-percent>% cloud coverage and <precip-inches> inches of precipitation. tl;dr: <weather-description>
+Today's weather: high of <high-temp> and low of <low-temp>. Plus <cloud-coverage-percent>% cloud coverage and <precip-inches> inches of precipitation. tl;dr: <weather-description>
 END WEATHER NEUTRAL
 
 ***BEGIN COMMENT***

@@ -32,7 +32,6 @@ def get_emotion_ratios(f):
     	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
-	print(line)
         #lines are structured like so: :) = 1
         line_tokens = line.split(" ")
         emotion = line_tokens[0]
@@ -177,23 +176,15 @@ def get_weather_negative(f):
     return weather_negative
 
 def get_weather_neutral(f):
-    '''Maps weather parameters to neutral tweets'''
-    weather_neutral = {}
+    '''Lists neutral tweets about the weather'''
+    weather_neutral = []
     line = f.readline().rstrip('\n')
     while line != "END WEATHER NEUTRAL":
 	#ignore blank lines or single-line comments
     	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
-	#loop through list of weather params and map them to tweets that use them
-	global weather_params
-	for param in weather_params:
-	    if line.find(param) == -1:
-		continue
-	    else:
-		if param not in weather_neutral.keys():
-		    weather_neutral[param] = []
-		weather_neutral[param].append(line)
+	weather_neutral.append(line)
 	line = f.readline().rstrip('\n')
     return weather_neutral
 
@@ -233,7 +224,7 @@ while line != "END SCRIPT":
         continue
 
     #use the line to determine what to do
-    print(line)
+    #print(line)
     if line == "EMOTION RATIOS":
         emotion_ratios = get_emotion_ratios(f)
         #print(emotion_ratios)
