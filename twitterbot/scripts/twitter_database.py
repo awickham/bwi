@@ -41,14 +41,25 @@ def set_emotion():
         random = 1
     for i, x in enumerate(emotion_ranges):
         if x >= random:
-            return corresponding_emotions[i]
+            current_emotion = corresponding_emotions[i]
+            return
+
+'''Uses emotion ratios to set current_emotion to one from the passed list'''        
+def set_emotion_from_list(list):
+    global emotions
+    temp = emotions
+    emotions = list
+    set_emotion()
+    global current_emotion
+    print("current emotion: " + current_emotion)
+    emotions = temp
 
 '''Picks an adjective (cause) correlated to one of the given emotions, based on their ratios'''
 def get_adjective_cause():
     global adjectives_cause
     global current_emotion
     if current_emotion == "":
-        current_emotion = set_emotion()
+        set_emotion()
     #choose random adj based on emotion
     possible_adjs = adjectives_cause[current_emotion]
     return choice(possible_adjs)
@@ -58,7 +69,7 @@ def get_adjective_effect():
     global adjectives_effect
     global current_emotion
     if current_emotion == "":
-        current_emotion = set_emotion()
+        set_emotion()
     #choose random adj based on emotion
     possible_adjs = adjectives_effect[current_emotion]
     return choice(possible_adjs)
@@ -68,7 +79,7 @@ def get_adverb():
     global adverbs
     global current_emotion
     if current_emotion == "":
-        current_emotion = set_emotion()
+        set_emotion()
     #choose random adv based on emotion
     possible_advs = adverbs[current_emotion]
     return choice(possible_advs)
@@ -78,7 +89,7 @@ def get_emoticon():
     global adjectives
     global current_emotion
     if current_emotion == "":
-        current_emotion = set_emotion()
+        set_emotion()
     return current_emotion
 
 '''Picks a generic hashtag at random'''
@@ -91,7 +102,7 @@ def get_hashtag_emotion():
     global hashtag_emotion
     global current_emotion
     if current_emotion == "":
-        current_emotion = set_emotion()
+        set_emotion()
     #choose random adj based on emotion
     possible_hashtags = hashtag_emotion[current_emotion]
     return choice(possible_hashtags)
@@ -134,6 +145,7 @@ translated_token = {"adj-cause": get_adjective_cause,
 def is_dynamic(token):    
     return len(token) > 0 and token.find("<") != -1 and token.rfind(">") != -1
 
+'''Determines if the token type (first element of a token delimited by '_') is a quote'''
 def is_quote(token_type):
     #must say at least "quote-0" (7 characters) to be a quote token
     if len(token_type) < 7:
@@ -250,3 +262,4 @@ def parse_tweet(tweet, *params):
     return parsed_tweet
 
 print parse_tweet('<text_:)="hi there!"_:(="oh, goodbye!"> <emoticon>')
+set_emotion_from_list([':)'])
