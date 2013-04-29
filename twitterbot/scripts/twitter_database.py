@@ -14,7 +14,7 @@ def get_trending_topics():
     
 current_emotion = ""
 
-'''emotion_ratio, adjectives_cause, adjectives_effect, adverbs, hashtag-generic,
+'''emotion_ratios, adjectives_cause, adjectives_effect, adverbs, hashtag-generic,
 hashtag-emotion, and tweet_dictionary set by textfile_to_database.py'''
 
 emotions = list(emotion_ratios.keys())
@@ -186,7 +186,27 @@ def parse_token(token, *params):
         if len(token_components) == 1: #there are no parameters
             return "<text>"
         return str_before + parse_text(token_components[1:], *params) + str_after
-    elif len(token_components) > 1: #there are specified emotions to choose from
+    elif token_type == "set-emotion":
+        if len(token_components) == 1: #there are no parameters
+            #pick any emotion randomly based on ratios
+            set_emotion()
+        else:
+            emotions = token_components[1:]
+            #check if any emotion listed has chance of being picked (i.e. not 0)
+            is_chance = False
+            for x in emotions:
+                global emotion_ratios
+                if int(emotion_ratios[x]) > 0:
+                    is_chance = True
+                    break
+            if(is_chance):
+                set_emotion_from_list(emotions)
+            else:
+                global current_emotion
+                current_emotion = choice(emotions)
+        return ""
+    
+    if len(token_components) > 1: #there are specified emotions to choose from
         global current_emotion
         current_emotion = choice(token_components[1:])
     if token_type in translated_token: #token is defined
@@ -261,4 +281,4 @@ def parse_tweet(tweet, *params):
                 parsed_tweet += space + token
     return parsed_tweet
 
-print parse_tweet('<text_:)="yay I\'m so happy!!"_:(="boo this sucks"> <emoticon> <adj-cause_:(> <emoticon>')
+print parse_tweet('This is going to be a <set-emotion_:(_:)> <adj-cause> day!')
