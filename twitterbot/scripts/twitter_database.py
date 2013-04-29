@@ -98,10 +98,22 @@ def get_hashtag_emotion():
 
 '''Returns a body of text, possibly based on emotions'''
 def parse_text(options, *params):
-    #note: assuming options are all plain text or all based on emotions
+    global current_emotion
+    #note: assuming options are all plain text or all based on emotions (not mixed)
     first_char = options[0][0]
-    if first_char == '"': #dealing with plain text; pick one at random
-        return 
+    if first_char == '"': #dealing with plain text
+        #pick one at random and remove quotation marks
+        return parse_token(choice(options))[1:-1]
+    else:
+        dictionary = {}
+        for x in options:
+            equal_index = x.find("=")
+            emotion = x[:equal_index]
+            #remove quotes from text
+            text = x[equal_index + 2:-1]
+            dictionary[emotion] = text
+        current_emotion = choice(dictionary.keys())
+        return parse_token(dictionary[current_emotion])
     
 '''Returns a param from a list of passed params'''
 def get_param(param_index_and_name, *params):
@@ -237,4 +249,4 @@ def parse_tweet(tweet, *params):
                 parsed_tweet += space + token
     return parsed_tweet
 
-print parse_tweet('<"hi there mister">')
+print parse_tweet('<text_:)="hi there!"_:(="oh, goodbye!"> <emoticon>')
