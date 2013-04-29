@@ -120,7 +120,7 @@ translated_token = {"adj-cause": get_adjective_cause,
 
 '''Determines if the given token is enclosed by < and >'''
 def is_dynamic(token):    
-    return len(token) > 0 and token.find("<") != -1 and token.find(">") != -1
+    return len(token) > 0 and token.find("<") != -1 and token.rfind(">") != -1
 
 def is_quote(token_type):
     #must say at least "quote-0" (7 characters) to be a quote token
@@ -137,7 +137,7 @@ def parse_token(token, *params):
         return token
     #remove < and >
     index_open = token.find("<")
-    index_close = token.find(">")
+    index_close = token.rfind(">")
     str_before = token[:index_open]
     str_after = ""
     #if there is text after the ">", save it in str_after
@@ -169,8 +169,8 @@ def parse_token(token, *params):
         #get function to generate token content
         transform_token = translated_token[token_type]
         return str_before + transform_token() + str_after
-    #token undefined
-    return str_before + "<" + token + ">" + str_after
+    #token undefined, but may contain defined tokens
+    return str_before + "<" + parse_token(token, *params) + ">" + str_after
 
 '''Replaces text in quotes with a dynamic token <quote_index> that refers to
 quotes[index] (which will store the original text)'''
@@ -237,4 +237,4 @@ def parse_tweet(tweet, *params):
                 parsed_tweet += space + token
     return parsed_tweet
 
-print parse_tweet('<"hi there">')
+print parse_tweet('<"hi there mister">')
