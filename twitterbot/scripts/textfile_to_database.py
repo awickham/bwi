@@ -21,13 +21,18 @@ tweet_dictionary = {}
 weather_positive = {}
 weather_negative = {}
 weather_neutral = {}
-weather_params = ["<high-temp>", "<low-temp>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<cloud-coverage-amount>", "<sky-description>"]
+weather_params = ["<high-temp>", "<low-temp>", "<current-temp>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<weather-description>"]
 
 def get_emotion_ratios(f):
     '''Maps emotions to ratios'''
     emotion_ratios = {}
     line = f.readline().rstrip('\n')
     while line != "END EMOTION RATIOS":
+	#ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
+            line = f.readline().rstrip('\n')
+            continue
+	print(line)
         #lines are structured like so: :) = 1
         line_tokens = line.split(" ")
         emotion = line_tokens[0]
@@ -42,8 +47,8 @@ def get_adjectives_cause(f):
     current_emotion = ""
     line = f.readline().rstrip('\n')
     while line != "END ADJECTIVES-CAUSE":
-        #ignore blank lines
-        if line == "":
+        #ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
         if line[:10] == "Emotion = ":
@@ -62,8 +67,8 @@ def get_adjectives_effect(f):
     current_emotion = ""
     line = f.readline().rstrip('\n')
     while line != "END ADJECTIVES-EFFECT":
-        #ignore blank lines
-        if line == "":
+        #ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
         if line[:10] == "Emotion = ":
@@ -82,8 +87,8 @@ def get_adverbs(f):
     current_emotion = ""
     line = f.readline().rstrip('\n')
     while line != "END ADVERBS":
-        #ignore blank lines
-        if line == "":
+        #ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
         if line[:10] == "Emotion = ":
@@ -101,8 +106,8 @@ def get_hashtag_generic(f):
     hashtag_generic = []
     line = f.readline().rstrip('\n')
     while line != "END HASHTAG GENERIC":
-        #ignore blank lines
-        if line == "":
+        #ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
         hashtag_generic.append(line)
@@ -115,8 +120,8 @@ def get_hashtag_emotion(f):
     current_emotion = ""
     line = f.readline().rstrip('\n')
     while line != "END HASHTAG EMOTION":
-        #ignore blank lines
-        if line == "":
+        #ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
         if line[:10] == "Emotion = ":
@@ -134,8 +139,8 @@ def get_weather_positive(f):
     weather_positive = {}
     line = f.readline().rstrip('\n')
     while line != "END WEATHER POSITIVE":
-	#ignore blank lines
-        if line == "":
+	#ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
 	#loop through list of weather params and map them to tweets that use them
@@ -155,8 +160,8 @@ def get_weather_negative(f):
     weather_negative = {}
     line = f.readline().rstrip('\n')
     while line != "END WEATHER NEGATIVE":
-	#ignore blank lines
-        if line == "":
+	#ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
 	#loop through list of weather params and map them to tweets that use them
@@ -176,8 +181,8 @@ def get_weather_neutral(f):
     weather_neutral = {}
     line = f.readline().rstrip('\n')
     while line != "END WEATHER NEUTRAL":
-	#ignore blank lines
-        if line == "":
+	#ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
 	#loop through list of weather params and map them to tweets that use them
@@ -198,8 +203,8 @@ def get_tweet_dictionary(f):
     current_key = ""
     line = f.readline().rstrip('\n')
     while line != "END TWEET DICTIONARY":
-        #ignore blank lines
-        if line == "":
+        #ignore blank lines or single-line comments
+    	if line == "" or (len(line) >= 2 and line[0:2] == "//"):
             line = f.readline().rstrip('\n')
             continue
         if line[:6] == "Key = ":
@@ -216,19 +221,19 @@ def get_tweet_dictionary(f):
 f = urllib2.urlopen(url_of_twitter_database_txt)
 line = f.readline().rstrip('\n')
 while line != "END SCRIPT":
-    #ignore comments
+    #ignore comment blocks
     if line == "***BEGIN COMMENT***":
         line = f.readline().rstrip('\n')
         while line != "***END COMMENT***":
             line = f.readline().rstrip('\n')
         line = f.readline().rstrip('\n')
-    #ignore blank lines
-    if line == "":
+    #ignore blank lines or single-line comments
+    if line == "" or (len(line) >= 2 and line[0:2] == "//"):
         line = f.readline().rstrip('\n')
         continue
-    
+
     #use the line to determine what to do
-    #print(line)
+    print(line)
     if line == "EMOTION RATIOS":
         emotion_ratios = get_emotion_ratios(f)
         #print(emotion_ratios)
