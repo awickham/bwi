@@ -1,5 +1,6 @@
 from random import *
-from textfile_to_database import *
+from textfile_to_database import emotion_ratios, adjectives_cause, adjectives_effect, adverbs, hashtag_generic, hashtag_emotion, tweet_dictionary
+import weather_node
 
 '''
 Created on Apr 6, 2013
@@ -7,20 +8,63 @@ Created on Apr 6, 2013
 @author: Andy and Tony
 '''
 
-'''TODO: Gets trending topics as hashtags from Twitter'''
-def get_trending_topics():
-    return ["hi", 
-            "bye"]
-    
 current_emotion = ""
 
-'''emotion_ratios, adjectives_cause, adjectives_effect, adverbs, hashtag-generic,
-hashtag-emotion, and tweet_dictionary set by textfile_to_database.py'''
 
 emotions = list(emotion_ratios.keys())
 
 #stores text contained in quotes
 quotes = []
+
+'''TODO: Gets trending topics as hashtags from Twitter'''
+def get_trending_topics():
+    return ["hi", 
+            "bye"]
+
+def get_high_temp():
+    return str(weather_node.high)
+
+def get_low_temp():
+    return str(weather_node.low)
+
+def get_current_temp():
+    return str(weather_node.current_temp())
+
+def get_precip_inches():
+    return str(weather_node.curr_precip_inches())
+
+def get_precip_amount():
+    '''precip_amount is defined as something that makes sense in this context: "There is <precip-amount> rain today."'''
+    precip_inches = weather_node.curr_precip_inches()
+    if precip_inches == 0:
+        return choice(["no", "not a drop of", "absolutely no"])
+    elif precip_inches < 0.6:
+        return choice(["a little", "some"])
+    elif precip_inches < 1.0:
+        return choice(["a fair amount of", "a bit of", "moderate amounts of", "an unpleasant amount of"])
+    else:
+        return choice(["way too much", "heavy amounts of", "so much", "tons of"])
+
+def get_cloud_coverage_percent():
+    return str(weather_node.cloudcover())
+
+def get_sky_description():
+    '''The sky is <sky-description>. (or) The <sky-description> sky ....'''
+    cloud_coverage_percent = int(get_cloud_coverage_percent())
+    if cloud_coverage_percent <= 25:
+        return choice(["sunny", "clear"])
+    elif cloud_coverage_percent <= 50:
+        return choice(["mostly sunny"])
+    elif cloud_coverage_percent <= 75:
+        return choice(["partly cloudy"])
+    else:
+        return choice(["mostly cloudy", "overcast", "dark"])
+
+def get_humidity():
+    return str(weather_node.humidity())
+
+def get_weather_description():
+    return weather_node.curr_weatherDesc()
 
 '''Resets the current emotion based on their ratios'''
 def set_emotion():
@@ -139,7 +183,16 @@ translated_token = {"adj-cause": get_adjective_cause,
             "adv": get_adverb,
             "emoticon": get_emoticon,
             "hashtag-generic": get_hashtag_generic,
-            "hashtag-emotion": get_hashtag_emotion}
+            "hashtag-emotion": get_hashtag_emotion,
+            "high-temp": get_high_temp,
+            "low-temp": get_low_temp,
+            "current-temp": get_current_temp,
+            "precip-inches": get_precip_inches,
+            "precip-amount": get_precip_amount,
+            "cloud-coverage-percent": get_cloud_coverage_percent,
+            "sky-description": get_sky_description,
+            "humidity-percent": get_humidity,
+            "weather-description": get_weather_description}
 
 '''Determines if the given token is enclosed by < and >'''
 def is_dynamic(token):    
@@ -156,6 +209,8 @@ def is_quote(token_type):
 etc. accordingly'''
 def parse_token(token, *params):
     global quotes
+    global current_emotion
+    
     #nothing to parse if not a token
     if not is_dynamic(token):
         return token
@@ -202,12 +257,10 @@ def parse_token(token, *params):
             if(is_chance):
                 set_emotion_from_list(emotions)
             else:
-                global current_emotion
                 current_emotion = choice(emotions)
         return ""
     
     if len(token_components) > 1: #there are specified emotions to choose from
-        global current_emotion
         current_emotion = choice(token_components[1:])
     if token_type in translated_token: #token is defined
         #get function to generate token content
@@ -280,5 +333,3 @@ def parse_tweet(tweet, *params):
             if token != "":
                 parsed_tweet += space + token
     return parsed_tweet
-
-print parse_tweet('This is going to be a <set-emotion_:(_:)> <adj-cause> day!')

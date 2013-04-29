@@ -6,11 +6,16 @@ w=LocalWeather('Austin, TX, United States')
 inches_per_milimeter = 0.039370
 
 #Current weather
-current_temp = w.data.current_condition.temp_F
-curr_precip_inches = w.data.current_condition.precipMM * inches_per_milimeter
-humidity = w.data.current_condition.humidity
-cloudcover = w.data.current_condition.cloudcover
-curr_weatherDesc = w.data.current_condition.weatherDesc
+def current_temp():
+    return w.data.current_condition.temp_F
+def curr_precip_inches():
+    return w.data.current_condition.precipMM * inches_per_milimeter
+def humidity():
+    return w.data.current_condition.humidity
+def cloudcover():
+    return w.data.current_condition.cloudcover
+def curr_weatherDesc():
+    return w.data.current_condition.weatherDesc
 
 #Forecasted weather
 high = w.data.weather.tempMaxF
