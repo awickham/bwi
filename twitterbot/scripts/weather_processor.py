@@ -1,4 +1,3 @@
-#import weather_node
 from textfile_to_database import weather_positive, weather_negative, weather_neutral, emotion_ratios
 from twitter_database import get_high_temp, get_low_temp, get_current_temp, get_precip_inches, get_precip_amount, get_cloud_coverage_percent, get_sky_description, get_humidity, get_weather_description, parse_tweet
 from random import choice, randint
@@ -75,7 +74,7 @@ def decide_positive_or_negative():
 		return NEGATIVE
 
 def tweet_neutrally_about_weather():
-	print(parse_tweet(choice(weather_neutral)))
+	return parse_tweet(choice(weather_neutral))
 
 def tweet_positively_about_weather():
 	positive_tweets = []
@@ -91,10 +90,9 @@ def tweet_positively_about_weather():
 				else:
 					positive_tweets.append(tweet)
 	if len(positive_tweets) == 0:
-		tweet_neutrally_about_weather()
+		return tweet_neutrally_about_weather()
 	else:
-		tweet = parse_tweet(choice(positive_tweets))
-		print(tweet)
+		return parse_tweet(choice(positive_tweets))
 
 def tweet_negatively_about_weather():
 	negative_tweets = []
@@ -110,14 +108,16 @@ def tweet_negatively_about_weather():
 				else:
 					negative_tweets.append(tweet)
 	if len(negative_tweets) == 0:
-		tweet_neutrally_about_weather()
+		return tweet_neutrally_about_weather()
 	else:
-		tweet = parse_tweet(choice(negative_tweets))
-		print(tweet)
+		return parse_tweet(choice(negative_tweets))
 
-if decide_positive_or_negative() == POSITIVE:
-	tweet_positively_about_weather()
-else:
-	tweet_negatively_about_weather()
-
-tweet_neutrally_about_weather()
+def tweet_about_weather():
+	'''Uses all the above code to decide what to tweet about data'''
+	feeling_about_weather = decide_positive_or_negative()
+	if feeling_about_weather == POSITIVE:
+		return tweet_positively_about_weather()
+	elif feeling_about_weather == NEGATIVE:
+		return tweet_negatively_about_weather()
+	else:
+		return tweet_neutrally_about_weather()
