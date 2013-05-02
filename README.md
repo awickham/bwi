@@ -1,6 +1,9 @@
 bwi
 ===
 
+Authors: Andy Wickham, Tony Wickham, and Ryan Zabcik
+Contact us at: {awickham, tonyw, }@cs.utexas.edu
+
 To install this code on a computer with ROS (i.e. the robots or the lab machines):
 
 1. Create the 'twitterbot' ROS package if it doesn't exist by running the following in Terminal:
@@ -49,7 +52,13 @@ To attach a Twitter account to a new robot:
  - In the getApi function, add an elif statement following the pattern of the existing elif statements (before the final else). Note that compName should be the name of the robot in lowercase.
  - You should be set! Now when the twitterbot node is running on the new robot, it should tweet to its Twitter account when it hears a message on the "tweet" topic.
 
+To update the database used to generate tweets:
 
+1. Navigate to ~/ros/rosbuild_ws/class-code/twitterbot/scripts
+2. Open twitter_database.txt.
+3. Add relevant words or tweet structures under the various subsections, using the comments for guidance.
+4. Push changes to GitHub (the twitter_processor node downloads it from there so we can update it dynamically from any computer).
+ - Note that you will need to contact us to get permission to push to our GitHub repository. You can do this using our emails at the top of this README.
 
 Quick Reference Guide:
 
