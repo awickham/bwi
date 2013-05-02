@@ -2,7 +2,10 @@ bwi
 ===
 
 Authors: Andy Wickham, Tony Wickham, and Ryan Zabcik
-Contact us at: {awickham, tonyw, }@cs.utexas.edu
+
+Contact us at: {awickham, tonyw, ryanz}@cs.utexas.edu
+
+
 
 To install this code on a computer with ROS (i.e. the robots or the lab machines):
 
@@ -59,6 +62,8 @@ To update the database used to generate tweets:
 3. Add relevant words or tweet structures under the various subsections, using the comments for guidance.
 4. Push changes to GitHub (the twitter_processor node downloads it from there so we can update it dynamically from any computer).
  - Note that you will need to contact us to get permission to push to our GitHub repository. You can do this using our emails at the top of this README.
+
+
 
 Quick Reference Guide:
 
