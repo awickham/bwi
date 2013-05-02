@@ -32,6 +32,11 @@ calculon_consumer_secret = 'Wnf2bRwo3JrViHaVvOpqY5TCxp0eZWB3GsDEK8TYR5o'
 calculon_access_token = '1244839182-FUE7QlVi4fnBG0pIVU1yRVOKznKnugZ4s76p6f2'
 calculon_access_token_secret = '92X6OUAvbureRinH0sfV3hxjREiYxEsftUSd1QZYY4'
 
+roberto_consumer_key = 'P1BjUBcgMrLGqAbhYuAuQ'
+roberto_consumer_secret = 'kyhCbaQqRXbIJg21SV1GjDMioItNPLYhYxWtVy0'
+roberto_access_token = '1368256272-0hg79Qzv6KANhnxhAkJraScQLIW1YxsAXTE4ENd'
+roberto_access_token_secret = 'mXn7zNkZ9dKuj2GG9upWtaysloygdep9pmgksCk'
+
 api = None
 
 def getApi(compName):
@@ -55,6 +60,11 @@ def getApi(compName):
                 calculon_consumer_secret,
                 calculon_access_token,
                 calculon_access_token_secret)
+    elif compName == 'roberto':
+        return twitter.Api(roberto_consumer_key,
+                roberto_consumer_secret,
+                roberto_access_token,
+                roberto_access_token_secret)
     else: #use test account if not on one of the robots
         return twitter.Api(ebooks_consumer_key,
 		ebooks_consumer_secret,
