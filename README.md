@@ -63,6 +63,19 @@ To update the database used to generate tweets:
 4. Push changes to GitHub (the twitter_processor and weather_processor nodes use textfile_to_database.py to download the database from there so we can update it dynamically from any computer).
  - Note that you will need to contact us to get permission to push to our GitHub repository. You can do this using our emails at the top of this README.
 
+To have the robots tweet about a new node:
+
+1. Navigate to ~/ros/rosbuild_ws/class-code/twitterbot/scripts
+2. Open taskmon.py (to edit, not to run).
+3. In the updateState function, there is a triply-nested 'for' loop containing an 'if' statement. There you will see the following 'if' statement (possibly followed by other similar statements):
+ if node == "/segway_rmp_node":
+         pub.publish("turned_on")
+4. Add an 'elif node == "/<YOUR_NODE_NAME_HERE>":' statement, followed by 'pub.publish("<SOME_RELEVANT_STATE_NAME">'
+5. If you want to tweet when your node ends, you can also add a similar statement nearer to the bottom underneath 'pub.publish("turned_off")'. The published message cannot be the same as any other published messages (including the message you sent when the node started).
+6. Save and exit, and open twitter_database.txt.
+7. At the bottom you will see a section labeled TWEET DICTIONARY with various Keys and other text.
+8. Add 'Key = <YOUR_RELEVANT_STATE_NAME>' followed by possible phrases to tweet when your node starts/ends (one will be picked at random). Note that these phrases can (and should) include dynamic tokens.
+
 
 
 Quick Reference Guide and Notes:
