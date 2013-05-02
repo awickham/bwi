@@ -1,5 +1,5 @@
 from textfile_to_database import weather_positive, weather_negative, weather_neutral, emotion_ratios
-from twitter_database import get_high_temp, get_low_temp, get_current_temp, get_precip_inches, get_precip_amount, get_cloud_coverage_percent, get_sky_description, get_humidity, get_weather_description, parse_tweet
+from twitter_database import get_high_temp, get_low_temp, get_current_temp, get_precip_inches, get_precip_amount, get_cloud_coverage_percent, get_sky_description, get_humidity, get_wind_speed, get_weather_description, parse_tweet
 from random import choice, randint
 
 POSITIVE = 0
@@ -8,7 +8,7 @@ NEGATIVE = 1
 positive_params = []
 negative_params = []
 
-'''weather_params = ["<high-temp>", "<high-temp-cold>", "<high-temp-hot>", "<low-temp>", "<low-temp-cold>", "<low-temp-hot>", "<current-temp>", "<current-temp-cold>", "<current-temp-hot>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<weather-description>"]'''
+'''weather_params = ["<high-temp>", "<high-temp-cold>", "<high-temp-hot>", "<low-temp>", "<low-temp-cold>", "<low-temp-hot>", "<current-temp>", "<current-temp-cold>", "<current-temp-hot>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<wind-speed>", "<weather-description>"]'''
 
 def decide_positive_or_negative():
 	'''Decides whether to tweet positvely or negatively about the weather.
@@ -64,6 +64,12 @@ def decide_positive_or_negative():
 		positive_params.append("<humidity>")
 	else:
 		negative_params.append("<humidity>")
+
+	wind_speed = int(get_wind_speed())
+	if "<current-temp-cold>" in negative_params and wind_speed > 15:
+		negative_params.append("<wind-speed>")
+	elif "<current-temp-hot>" in negative_params and wind_speed > 15:
+		positive_params.append("<wind-speed>")
 	
 	positive_emotions_sum = int(emotion_ratios[":)"]) + int(emotion_ratios[":D"]) + int(emotion_ratios["<3"])
 	negative_emotions_sum = int(emotion_ratios[":("]) + int(emotion_ratios[":'("]) + int(emotion_ratios[">:("])

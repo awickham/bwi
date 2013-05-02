@@ -14,6 +14,8 @@ def humidity():
     return w.data.current_condition.humidity
 def cloudcover():
     return w.data.current_condition.cloudcover
+def windSpeed():
+	return w.data.current_condition.windspeedMiles
 def curr_weatherDesc():
     return w.data.current_condition.weatherDesc
 

@@ -21,7 +21,7 @@ tweet_dictionary = {}
 weather_positive = {}
 weather_negative = {}
 weather_neutral = {}
-weather_params = ["<high-temp>", "<high-temp-cold>", "<high-temp-hot>", "<low-temp>", "<low-temp-cold>", "<low-temp-hot>", "<current-temp>", "<current-temp-cold>", "<current-temp-hot>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<weather-description>"]
+weather_params = ["<high-temp>", "<high-temp-cold>", "<high-temp-hot>", "<low-temp>", "<low-temp-cold>", "<low-temp-hot>", "<current-temp>", "<current-temp-cold>", "<current-temp-hot>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<wind-speed>", "<weather-description>"]
 
 def get_emotion_ratios(f):
     '''Maps emotions to ratios'''

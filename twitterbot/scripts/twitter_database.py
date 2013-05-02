@@ -63,6 +63,9 @@ def get_sky_description():
 def get_humidity():
     return str(weather_node.humidity())
 
+def get_wind_speed():
+	return str(weather_node.windSpeed())
+
 def get_weather_description():
     return weather_node.curr_weatherDesc()
 
@@ -198,6 +201,7 @@ translated_token = {"adj-cause": get_adjective_cause,
             "cloud-coverage-percent": get_cloud_coverage_percent,
             "sky-description": get_sky_description,
             "humidity-percent": get_humidity,
+			"wind-speed": get_wind_speed,
             "weather-description": get_weather_description}
 
 '''Determines if the given token is enclosed by < and >'''
