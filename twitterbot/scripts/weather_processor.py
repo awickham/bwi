@@ -8,7 +8,7 @@ NEGATIVE = 1
 positive_params = []
 negative_params = []
 
-'''weather_params = ["<high-temp>", "<low-temp>", "<current-temp>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<weather-description>"]'''
+'''weather_params = ["<high-temp>", "<high-temp-cold>", "<high-temp-hot>", "<low-temp>", "<low-temp-cold>", "<low-temp-hot>", "<current-temp>", "<current-temp-cold>", "<current-temp-hot>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<weather-description>"]'''
 
 def decide_positive_or_negative():
 	'''Decides whether to tweet positvely or negatively about the weather.
@@ -23,18 +23,21 @@ def decide_positive_or_negative():
 		positive_params.append("<high-temp>")
 	else:
 		negative_params.append("<high-temp>")
+		negative_params.append("<high-temp-cold>" if high_temp < 70 else "<high-temp-hot>")
 
 	low_temp = int(get_low_temp())
-	if low_temp > 45 and low_temp < 75:
+	if low_temp > 45 and low_temp < 60:
 		positive_params.append("<low-temp>")
 	else:
 		negative_params.append("<low-temp>")
+		negative_params.append("<low-temp-cold>" if low_temp < 45 else "<low-temp-hot>")
 
 	current_temp = int(get_current_temp())
 	if current_temp > 70 and current_temp < 85:
 		positive_params.append("<current-temp>")
 	else:
 		negative_params.append("<current-temp>")
+		negative_params.append("<current-temp-cold>" if current_temp < 70 else "<current-temp-hot>")
 
 	precip_inches = float(get_precip_inches())
 	if precip_inches == 0:
@@ -107,6 +110,7 @@ def tweet_negatively_about_weather():
 						break #continue outer for loop
 				else:
 					negative_tweets.append(tweet)
+	print negative_tweets #TODO delete
 	if len(negative_tweets) == 0:
 		return tweet_neutrally_about_weather()
 	else:
