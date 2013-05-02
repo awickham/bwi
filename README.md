@@ -22,8 +22,7 @@ To run our code:
  - rosrun twitterbot twitterbot.py
  - rosrun twitterbot twitter_processor.py
  - rosrun twitterbot taskmon.py
-
-ROS has built-in commands to publish messages to a specific topic. For instance, to publish to the "tweet" topic (and have the robot or computer tweet on Twitter), you can run the following command:
+3. ROS has built-in commands to publish messages to a specific topic. For instance, to publish to the "tweet" topic (and have the robot or computer tweet on Twitter), you can run the following command:
  - rostopic pub /tweet std_msgs/String "<Text to Tweet Here>"
 
 To attach a Twitter account to a new robot:
