@@ -1,7 +1,30 @@
 bwi
 ===
 
-(I'll update this more later)
+To install this code on a computer with ROS (i.e. the robots or the lab machines):
+
+1. Create the 'twitterbot' ROS package if it doesn't exist by running the following in Terminal:
+ - roscd
+ - cd class-code
+ - roscreate-pkg twitterbot
+2. Copy the contents of the twitterbot subdirectory of this bwi folder into the new twitterbot directory in ros (should be something like ~/ros/rosbuild_ws/class-code/twitterbot).
+3. Make the python scripts executable. If you are still in the class-code directory, run:
+ - cd twitterbot/scripts
+ - chmod +x *.py
+4. Finally, run rosmake (this step may be unnecessary):
+ - rosmake twitterbot
+
+To run our code:
+
+1. Start ROS core:
+ - roscore
+2. Start the following nodes. twitterbot subscribes to the "tweet" topic and tweets messages it receives, twitter_processor subscribes to "twitter_task", queries our database, and publishes the resulting tweet to "tweet", and taskmon monitors when nodes appear and disappear on the core and publishes updates to "twitter_task".
+ - rosrun twitterbot twitterbot.py
+ - rosrun twitterbot twitter_processor.py
+ - rosrun twitterbot taskmon.py
+
+ROS has built-in commands to publish messages to a specific topic. For instance, to publish to the "tweet" topic (and have the robot or computer tweet on Twitter), you can run the following command:
+ - rostopic pub /tweet std_msgs/String "<Text to Tweet Here>"
 
 The Weather folder on Github is currently not used. It will eventually be used to make a weather node that publishes weather information for other people to use; right now, we just retrieve the weather and use it directly without publishing and subscribing (which is why the "weather_node.py" and "pywwo.py" are in twitterbot/scripts).
 
