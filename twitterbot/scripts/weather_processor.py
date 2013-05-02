@@ -19,19 +19,19 @@ def decide_positive_or_negative():
 	negative_params = []
 	
 	high_temp = int(get_high_temp())
-	if high_temp > 60 and high_temp < 85:
+	if high_temp > 70 and high_temp < 85:
 		positive_params.append("<high-temp>")
 	else:
 		negative_params.append("<high-temp>")
 
 	low_temp = int(get_low_temp())
-	if low_temp > 40 and low_temp < 75:
+	if low_temp > 45 and low_temp < 75:
 		positive_params.append("<low-temp>")
 	else:
 		negative_params.append("<low-temp>")
 
 	current_temp = int(get_current_temp())
-	if current_temp > 60 and current_temp < 85:
+	if current_temp > 70 and current_temp < 85:
 		positive_params.append("<current-temp>")
 	else:
 		negative_params.append("<current-temp>")
@@ -121,3 +121,5 @@ def tweet_about_weather():
 		return tweet_negatively_about_weather()
 	else:
 		return tweet_neutrally_about_weather()
+
+print tweet_about_weather()
