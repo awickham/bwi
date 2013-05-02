@@ -24,11 +24,11 @@ To run our code:
 
 1. Start ROS core:
  - roscore
-2. Start the following nodes. twitterbot subscribes to the "tweet" topic and tweets messages it receives, twitter_processor subscribes to "twitter_task", queries our database, and publishes the resulting tweet to "tweet", and taskmon monitors when nodes appear and disappear on the core and publishes updates to "twitter_task".
+2. Start the following nodes in separate Terminal windows. twitterbot subscribes to the "tweet" topic and tweets messages it receives, twitter_processor subscribes to "twitter_task", queries our database, and publishes the resulting tweet to "tweet", and taskmon monitors when nodes appear and disappear on the core and publishes updates to "twitter_task".
  - rosrun twitterbot twitterbot.py
  - rosrun twitterbot twitter_processor.py
  - rosrun twitterbot taskmon.py
-3. ROS has built-in commands to publish messages to a specific topic. For instance, to publish to the "tweet" topic (and have the robot or computer tweet on Twitter), you can run the following command:
+3. ROS has built-in commands to publish messages to a specific topic. For instance, to publish to the "tweet" topic (and have the robot or computer tweet on Twitter), you can run the following command in a 5th Terminal window:
  - rostopic pub /tweet std_msgs/String "<Text to Tweet Here>"
 
 To attach a Twitter account to a new robot:
