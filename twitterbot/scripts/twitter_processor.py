@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import roslib; roslib.load_manifest('twitterbot')
 import rospy
-from std_msgs.msg import String, Bool
+from std_msgs.msg import String
 
 from twitter_database import *
 import weather_processor
@@ -69,7 +69,6 @@ def listener():
 
 import time
 def weather_tweet():
-	print("Tweeting about weather")
 	pub_tweet(WEATHER)
 	time.sleep(600)
 

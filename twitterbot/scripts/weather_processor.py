@@ -81,7 +81,7 @@ def tweet_positively_about_weather():
 	global positive_params
 	global negative_params
 	for param in positive_params:
-		if param in weather_positive:
+		if param in weather_positive: #weather_positive maps params to positive tweets
 			for tweet in weather_positive[param]:
 				#don't include this tweet if it contains a negative parameter
 				for neg_param in negative_params:
@@ -92,14 +92,14 @@ def tweet_positively_about_weather():
 	if len(positive_tweets) == 0:
 		return tweet_neutrally_about_weather()
 	else:
-		return parse_tweet(choice(positive_tweets))
+		return parse_tweet(choice(positive_tweets)) #TODO: stop parsing here; twitterbot will do that
 
 def tweet_negatively_about_weather():
 	negative_tweets = []
 	global positive_params
 	global negative_params
 	for param in negative_params:
-		if param in weather_negative:
+		if param in weather_negative: #weather_negative maps params to negative tweets
 			for tweet in weather_negative[param]:
 				#don't include this tweet if it contains a positive parameter
 				for pos_param in positive_params:
@@ -110,7 +110,7 @@ def tweet_negatively_about_weather():
 	if len(negative_tweets) == 0:
 		return tweet_neutrally_about_weather()
 	else:
-		return parse_tweet(choice(negative_tweets))
+		return parse_tweet(choice(negative_tweets)) #TODO: stop parsing here; twitterbot will do that
 
 def tweet_about_weather():
 	'''Uses all the above code to decide what to tweet about data'''
