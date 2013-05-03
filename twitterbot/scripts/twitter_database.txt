@@ -238,6 +238,7 @@ I can't see the sun. <emoticon_:(_:/> The clouds are covering <cloud-coverage-pe
 A high of <high-temp-cold> degrees and a low of <low-temp-cold>?! My motors are going to refuse to move! <emoticon_:(_:/_:'(|hashtag-emotion_:s_:(|>
 I'm glad I don't sweat... today's high is <high-temp-hot> and there is <humidity-percent>% humidity. <emoticon_:(_:/|> <text_:)="Maybe that means more people will be inside to visit me! :)"_:(="What a sucky day!">
 Brr, it's cold! And this <wind-speed> MPH wind is certainly not making things any better! <set-emotion_>:(_:(_:'(> <emoticon|hashtag-emotion|>
+<current-temp-cold?> Good thing I'm inside... it's pretty cold out there! <emoticon_:s_:(|>
 END WEATHER NEGATIVE
 
 WEATHER NEUTRAL
