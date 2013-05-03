@@ -4,6 +4,7 @@ from random import choice, randint
 
 POSITIVE = 0
 NEGATIVE = 1
+NEUTRAL = 2
 
 positive_params = []
 negative_params = []
@@ -103,6 +104,10 @@ def decide_positive_or_negative():
 
 	positive = positive_emotions_sum * len(positive_params)
 	negative = negative_emotions_sum * len(negative_params)
+
+	#chance to tweet neutrally if positive and negative are close
+	if abs(positive-negative) <= 3:
+		return choice([POSITIVE, NEGATIVE, NEUTRAL])
 
 	if randint(1, positive + negative) <= positive:
 		return POSITIVE
