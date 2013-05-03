@@ -229,6 +229,7 @@ Ah, a high of <high-temp> and a low of <low-temp>! Not too hot and not too cold.
 I can tell today is going to be a <adj-cause_:)_:D> day! <sky-description> skies, a high of <high-temp> and <precip-amount> rain! <emoticon_:)_:D>
 It's a <adj-cause_:)_:D|text_"beautiful"> <current-temp> degrees outside and I am just loving life! <emoticon_:)_<3> <hashtag-emotion_:)> <hashtag-emotion_<3>
 It may be warm out, but at least there is a <adj-cause_:)|text_"nice"> <wind-speed> MPH breeze. :)
+<is-clear?> <text_"Wow!"_"Amazing!"_"Take a look outside!"> There's hardly a cloud in sight!
 END WEATHER POSITIVE
 
 WEATHER NEGATIVE
@@ -241,6 +242,8 @@ END WEATHER NEGATIVE
 
 WEATHER NEUTRAL
 Today's weather: high of <high-temp> and low of <low-temp>. Plus <cloud-coverage-percent>% cloud coverage and <precip-inches> inches of precipitation. tl;dr: <weather-description>
+//TODO: replace "rather" with "<wind-amount>" once it's implemented
+<high-wind-speed?> Wow, it's rather windy outside!
 END WEATHER NEUTRAL
 
 ***BEGIN COMMENT***
