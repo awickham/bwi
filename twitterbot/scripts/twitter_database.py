@@ -154,6 +154,9 @@ def get_hashtag_emotion():
     possible_hashtags = hashtag_emotion[current_emotion]
     return choice(possible_hashtags)
 
+def get_empty_string():
+	return ""
+
 '''Returns a body of text, possibly based on emotions'''
 def parse_text(options, *params):
     global current_emotion
@@ -202,7 +205,20 @@ translated_token = {"adj-cause": get_adjective_cause,
             "sky-description": get_sky_description,
             "humidity-percent": get_humidity,
 			"wind-speed": get_wind_speed,
-            "weather-description": get_weather_description}
+            "weather-description": get_weather_description,
+			"high-temp-cold?" : get_empty_string,
+			"high-temp-hot?" : get_empty_string,
+			"low-temp-cold?" : get_empty_string,
+			"low-temp-hot?" : get_empty_string,
+			"current-temp-cold?" : get_empty_string,
+			"current-temp-hot?" : get_empty_string,
+			"is-rain?" : get_empty_string,
+			"is-clear?" : get_empty_string,
+			"is-overcast?" : get_empty_string,
+			"high-humidity?" : get_empty_string,
+			"low-humidity?" : get_empty_string,
+			"high-wind-speed?" : get_empty_string,
+			"low-wind-speed?" : get_empty_string}
 
 '''Determines if the given token is enclosed by < and >'''
 def is_dynamic(token):    
@@ -341,5 +357,5 @@ def parse_tweet(tweet, *params):
             token = parse_token(x, *params)
             #don't have a space for blank or initial token
             if token != "":
-                parsed_tweet += space + token
+                parsed_tweet += space + token if parsed_tweet != "" else token
     return parsed_tweet
