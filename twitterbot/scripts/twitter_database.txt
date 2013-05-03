@@ -234,9 +234,9 @@ END WEATHER POSITIVE
 WEATHER NEGATIVE
 Ugh, there's <precip-amount> rain! <precip-inches> inches expected today. <emoticon_:(_:'(_:/>
 I can't see the sun. <emoticon_:(_:/> The clouds are covering <cloud-coverage-percent>% of the sky. <emoticon_:(_:/_:'(>
-A high of <high-temp-cold> degrees and a low of <low-temp-cold>?! My motors are going to refuse to move! <hashtag-emotion_:s_:/_:(_:'(>
+A high of <high-temp-cold> degrees and a low of <low-temp-cold>?! My motors are going to refuse to move! <emoticon_:(_:/_:'(|hashtag-emotion_:s_:(|>
 I'm glad I don't sweat... today's high is <high-temp-hot> and there is <humidity-percent>% humidity. <emoticon_:(_:/|> <text_:)="Maybe that means more people will be inside to visit me! :)"_:(="What a sucky day!">
-Brr, it's cold! And this <wind-speed> MPH wind is certainly not making things any better! <set-emotion_>:(_:/_:(_:'(> <emoticon|hashtag-emotion>
+Brr, it's cold! And this <wind-speed> MPH wind is certainly not making things any better! <set-emotion_>:(_:(_:'(> <emoticon|hashtag-emotion|>
 END WEATHER NEGATIVE
 
 WEATHER NEUTRAL
