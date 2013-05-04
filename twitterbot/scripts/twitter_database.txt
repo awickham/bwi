@@ -48,10 +48,13 @@ very happy
 great
 wonderful
 exuberant
+super
+awesome
 
 Emotion = <3
 lovable
 carefree
+amazing
 
 Emotion = :(
 sad
@@ -61,6 +64,7 @@ unpleasant
 Emotion = :'(
 very sad
 horrific
+terrible
 
 Emotion = >:(
 terrible
@@ -70,16 +74,19 @@ Emotion = :/
 regretful
 boring
 sad
+disappointing
 
 Emotion = -.-
 boring
 tedious
 tiresome
 unamusing
+annoying
 
 Emotion = :s
 scary
 uncertain
+worrisome
 END ADJECTIVES-CAUSE
 
 ***BEGIN COMMENT***
@@ -96,6 +103,7 @@ relaxed
 
 Emotion = :D
 overjoyed
+wonderful
 
 Emotion = <3
 loved
@@ -107,6 +115,7 @@ sad
 
 Emotion = :'(
 very depressed
+very sad
 emotional
 upset
 
@@ -119,12 +128,14 @@ Emotion = :/
 bored
 uncertain
 sad
+disappointed
 
 Emotion = -.-
 tired
 exhausted
 bored
 unamused
+annoyed
 
 Emotion = :s
 frightened
@@ -138,6 +149,7 @@ Now we map emotions to adverbs.
 ADVERBS
 Emotion = :)
 happily
+gladly
 
 Emotion = :D
 very happily
@@ -147,6 +159,7 @@ lovingly
 
 Emotion = :(
 sadly
+unfortunately
 
 Emotion = :'(
 very sadly
@@ -160,6 +173,7 @@ regretfully
 
 Emotion = -.-
 monotonously
+annoyingly
 
 Emotion = :s
 frightfully
@@ -190,6 +204,7 @@ Emotion = :D
 Emotion = <3
 #WhatIsLove
 #LoveToday
+#lovelovelove
 
 Emotion = :(
 #whyme
@@ -201,9 +216,11 @@ Emotion = :'(
 
 Emotion = >:(
 #ImGoingToRunOverSomeone
+#GetMeOutOfHere
 
 Emotion = :/
 #Regrets
+#whatever
 
 Emotion = -.-
 #IsItTomorrowYet
@@ -264,6 +281,7 @@ Hello, world! Today is going to be a <adj-cause> day. <emoticon>
 
 Key = turned_off
 Goodbye.
+I have been slain!
 
 Key = bored
 *sigh* I'm just <adv_-.-_:/> sitting here... <emoticon> <hashtag-emotion>
