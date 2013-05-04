@@ -70,7 +70,7 @@ def listener():
 import time
 def weather_tweet():
 	pub_tweet(WEATHER)
-	time.sleep(600)
+	time.sleep(21600) #six hours
 
 if __name__ == '__main__':
 	# start listening for twitter_task
