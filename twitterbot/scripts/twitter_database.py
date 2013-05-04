@@ -262,7 +262,7 @@ def parse_token(token, *params):
         return str_before + get_param(token_components[1], *params) + str_after
     elif is_quote(token_type):
         quote_index = int(token_type[token_type.find('-') + 1:])
-        return str_before + quotes[quote_index] + str_after
+        return str_before + parse_tweet(quotes[quote_index]) + str_after
     elif token_type == "text":
         if len(token_components) == 1: #there are no parameters
             return "<text>"
