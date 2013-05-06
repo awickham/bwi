@@ -36,10 +36,9 @@ def pub_tweet(tweet_type):
 	time_of_last_tweet = rospy.get_time()
 
 	# tweet the tweet
-	pub = rospy.Publisher("tweet", String)
-	rospy.init_node('twitter_processor')
-	rospy.loginfo("Sent following string to be tweeted: " + tweet)
+	pub = rospy.Publisher("tweet", String, latch=True)
 	pub.publish(tweet)
+	rospy.loginfo("Sent following string to be tweeted: " + tweet)
 
 def callback(data):
 	global time_of_last_tweet
