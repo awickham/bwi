@@ -18,6 +18,14 @@ def windSpeed():
 	return w.data.current_condition.windspeedMiles
 def curr_weatherDesc():
     return w.data.current_condition.weatherDesc
+def observation_time():
+	'''Returns observed hour (1-24)'''
+	time = str(w.data.current_condition.observation_time)
+	h = int(time[:2])
+	m = int(time[3:5])
+	if time[6:] == 'PM':
+		h += 12
+	return h - 5 #from UTC to Central Time
 
 #Forecasted weather
 high = w.data.weather.tempMaxF
