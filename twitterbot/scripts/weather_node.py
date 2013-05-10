@@ -1,30 +1,24 @@
 from pywwo import *
 
 setKey('h6zcfapfu9647c285nyzdgvb', 'free')
-ZIP_CODE = str(78712)
-w=LocalWeather(ZIP_CODE)
+ZIP_CODE = "78712"
 
 inches_per_milimeter = 0.039370
 
+#Forecasted weather
+high = LocalWeather(ZIP_CODE).data.weather.tempMaxF
+low = LocalWeather(ZIP_CODE).data.weather.tempMinF
+forecasted_precip_inches = LocalWeather(ZIP_CODE).data.weather.precipMM * inches_per_milimeter
+forecasted_weatherDesc = LocalWeather(ZIP_CODE).data.weather.weatherDesc
+
 #Current weather
-def current_temp():
-	w=LocalWeather(ZIP_CODE)
-	return w.data.current_condition.temp_F
-def curr_precip_inches():
-	w=LocalWeather(ZIP_CODE)
-	return w.data.current_condition.precipMM * inches_per_milimeter
-def humidity():
-	w=LocalWeather(ZIP_CODE)
-	return w.data.current_condition.humidity
-def cloudcover():
-	w=LocalWeather(ZIP_CODE)
-	return w.data.current_condition.cloudcover
-def windSpeed():
-	w=LocalWeather(ZIP_CODE)
-	return w.data.current_condition.windspeedMiles
-def curr_weatherDesc():
-	w=LocalWeather(ZIP_CODE)
-	return w.data.current_condition.weatherDesc
+current_temp = LocalWeather(ZIP_CODE).data.current_condition.temp_F
+curr_precip_inches = LocalWeather(ZIP_CODE).data.current_condition.precipMM * inches_per_milimeter
+humidity = LocalWeather(ZIP_CODE).data.current_condition.humidity
+cloudcover = LocalWeather(ZIP_CODE).data.current_condition.cloudcover
+windSpeed = LocalWeather(ZIP_CODE).data.current_condition.windspeedMiles
+curr_weatherDesc = LocalWeather(ZIP_CODE).data.current_condition.weatherDesc
+
 def observation_time():
 	'''Returns observed hour (1-24)'''
 	w=LocalWeather(ZIP_CODE)
@@ -34,12 +28,6 @@ def observation_time():
 	if time[6:] == 'PM':
 		h += 12
 	return h - 5 #from UTC to Central Time
-
-#Forecasted weather
-high = LocalWeather(ZIP_CODE).data.weather.tempMaxF
-low = LocalWeather(ZIP_CODE).data.weather.tempMinF
-forecasted_precip_inches = LocalWeather(ZIP_CODE).data.weather.precipMM * inches_per_milimeter
-forecasted_weatherDesc = LocalWeather(ZIP_CODE).data.weather.weatherDesc
 
 '''
 print "Today's Forecast"
