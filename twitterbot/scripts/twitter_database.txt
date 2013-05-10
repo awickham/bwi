@@ -196,6 +196,7 @@ HASHTAG EMOTION
 Emotion = :)
 #OhHappyDay
 #LifeIsBeautiful
+#hookem
 
 Emotion = :D
 #happyhappyhappy
@@ -251,6 +252,7 @@ I can tell today is going to be a <adj-cause_:)_:D> day! <sky-description> skies
 It's a <adj-cause_:)_:D|text_"beautiful"> <current-temp> degrees outside and I am just loving life! <emoticon_:)_<3> <hashtag-emotion_:)|> <hashtag-emotion_<3|>
 <is-hot?> It may be warm out, but at least there is a <adj-cause_:)|text_"nice"> <wind-speed> MPH breeze. :)
 <is-clear?> <text_"Wow!"_"Amazing!"_"Take a look outside!"> There's hardly a cloud in sight!
+What a pretty view! The sky is <sky-description> with a high of <high-temp>. <hashtag-emotion_:)>
 END WEATHER POSITIVE
 
 WEATHER NEGATIVE
