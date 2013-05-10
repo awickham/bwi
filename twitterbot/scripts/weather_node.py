@@ -1,25 +1,33 @@
 from pywwo import *
 
 setKey('h6zcfapfu9647c285nyzdgvb', 'free')
-w=LocalWeather('Austin, TX, United States')
+ZIP_CODE = str(78712)
+w=LocalWeather(ZIP_CODE)
 
 inches_per_milimeter = 0.039370
 
 #Current weather
 def current_temp():
+	w=LocalWeather(ZIP_CODE)
     return w.data.current_condition.temp_F
 def curr_precip_inches():
+	w=LocalWeather(ZIP_CODE)
     return w.data.current_condition.precipMM * inches_per_milimeter
 def humidity():
+	w=LocalWeather(ZIP_CODE)
     return w.data.current_condition.humidity
 def cloudcover():
+	w=LocalWeather(ZIP_CODE)
     return w.data.current_condition.cloudcover
 def windSpeed():
+	w=LocalWeather(ZIP_CODE)
 	return w.data.current_condition.windspeedMiles
 def curr_weatherDesc():
+	w=LocalWeather(ZIP_CODE)
     return w.data.current_condition.weatherDesc
 def observation_time():
 	'''Returns observed hour (1-24)'''
+	w=LocalWeather(ZIP_CODE)
 	time = str(w.data.current_condition.observation_time)
 	h = int(time[:2])
 	m = int(time[3:5])
@@ -28,10 +36,10 @@ def observation_time():
 	return h - 5 #from UTC to Central Time
 
 #Forecasted weather
-high = w.data.weather.tempMaxF
-low = w.data.weather.tempMinF
-forecasted_precip_inches = w.data.weather.precipMM * inches_per_milimeter
-forecasted_weatherDesc = w.data.weather.weatherDesc
+high = LocalWeather(ZIP_CODE).data.weather.tempMaxF
+low = LocalWeather(ZIP_CODE).data.weather.tempMinF
+forecasted_precip_inches = LocalWeather(ZIP_CODE).data.weather.precipMM * inches_per_milimeter
+forecasted_weatherDesc = LocalWeather(ZIP_CODE).data.weather.weatherDesc
 
 '''
 print "Today's Forecast"
