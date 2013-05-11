@@ -262,6 +262,8 @@ A high of <high-temp-cold> degrees and a low of <low-temp-cold>?! My motors are 
 I'm glad I don't sweat... today's high is <high-temp-hot> and there is <humidity-percent>% humidity. <emoticon_:(_:/|> <text_:)="Maybe that means more people will be inside to visit me! :)"_:(="What a <adj-cause_:(_:'(> day!">
 Brr, it's cold! And this <wind-speed> MPH wind is certainly not making things any better! <set-emotion_>:(_:(_:'(> <emoticon|hashtag-emotion|>
 <current-temp-cold?> Good thing I'm inside... it's pretty cold out there! <emoticon_:s_:(|>
+<is-rain?> <is-overcast?> By the looks of things, I'd say a storm is brewing! <emoticon_:s_:(|hashtag-emotion_:s_:(>
+<is-rain?> <is-overcast?> <high-wind-speed?> Oh dear... <sky-description> skies, <precip-amount> rain, and <wind-speed> MPH winds... I should probably stay inside!
 END WEATHER NEGATIVE
 
 WEATHER NEUTRAL
