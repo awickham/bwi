@@ -92,12 +92,12 @@ def decide_positive_or_negative():
 		add_boolean_token("<high-humidity?>")
 
 	wind_speed = int(get_wind_speed())
+	if wind_speed >= 20:
+		add_boolean_token("<high-wind-speed?>")
 	if "<current-temp-cold>" in negative_params and wind_speed > 15:
 		negative_params.append("<wind-speed>")
-		add_boolean_token("<low-wind-speed?>")
 	elif "<current-temp-hot>" in negative_params and wind_speed > 15:
 		positive_params.append("<wind-speed>")
-		add_boolean_token("<high-wind-speed?>")
 
 	positive_emotions_sum = int(emotion_ratios[":)"]) + int(emotion_ratios[":D"]) + int(emotion_ratios["<3"])
 	negative_emotions_sum = int(emotion_ratios[":("]) + int(emotion_ratios[":'("]) + int(emotion_ratios[">:("])
