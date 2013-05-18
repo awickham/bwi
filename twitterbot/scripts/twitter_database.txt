@@ -265,6 +265,7 @@ Brr, it's cold! And this <wind-speed> MPH wind is certainly not making things an
 <is-rain?> <is-overcast?> By the looks of things, I'd say a storm is brewing! <emoticon_:s_:(|hashtag-emotion_:s_:(>
 <is-rain?> <is-overcast?> <high-wind-speed?> Oh dear... <sky-description> skies, <precip-amount> rain, and <wind-speed> MPH winds... I should probably stay inside!
 <is-rain?> <is-overcast?> <high-wind-speed?> Loving this absolutely <adj-cause_:)_:D_<3|text_"gorgeous"> weather... #not
+Oh it feels great today... in this <adj-cause_:)> air conditioning! Outside, not so much. #gotcha
 END WEATHER NEGATIVE
 
 WEATHER NEUTRAL
