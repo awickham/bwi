@@ -23,7 +23,8 @@ weather_negative = {}
 weather_neutral = {}
 weather_params = ["<high-temp>", "<high-temp-cold>", "<high-temp-hot>", "<low-temp>", "<low-temp-cold>", "<low-temp-hot>", "<current-temp>", "<current-temp-cold>", "<current-temp-hot>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<wind-speed>", "<weather-description>"]
 #Add the boolean weather_params; tweets with these will only be considered if booleans are true
-weather_params.extend(["<high-temp-cold?>", "<high-temp-hot?>", "<low-temp-cold?>", "<low-temp-hot?>", "<current-temp-cold?>", "<current-temp-hot?>", "<is-rain?>", "<is-clear?>", "<is-overcast?>", "<high-humidity?>", "<low-humidity?>", "<high-wind-speed?>", "<low-wind-speed?>", "<is-day?>", "<is-night?>"])
+bool_params = ["<high-temp-cold?>", "<high-temp-hot?>", "<low-temp-cold?>", "<low-temp-hot?>", "<current-temp-cold?>", "<current-temp-hot?>", "<is-rain?>", "<is-clear?>", "<is-overcast?>", "<high-humidity?>", "<low-humidity?>", "<high-wind-speed?>", "<low-wind-speed?>", "<is-day?>", "<is-night?>"]
+weather_params.extend(bool_params)
 
 def get_emotion_ratios(f):
     '''Maps emotions to ratios'''
