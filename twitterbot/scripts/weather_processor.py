@@ -1,4 +1,4 @@
-from textfile_to_database import weather_positive, weather_negative, weather_neutral, emotion_ratios
+from textfile_to_database import weather_positive, weather_negative, weather_neutral, emotion_ratios, bool_params
 from twitter_database import get_high_temp, get_low_temp, get_current_temp, get_precip_inches, get_precip_amount, get_cloud_coverage_percent, get_sky_description, get_humidity, get_wind_speed, get_weather_description
 from twitter_database import parse_tweet
 from random import choice, randint
