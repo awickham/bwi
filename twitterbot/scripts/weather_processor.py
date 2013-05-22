@@ -139,7 +139,7 @@ def tweet_positively_about_weather():
 		if param in weather_positive: #weather_positive maps params to positive tweets
 			for tweet in weather_positive[param]:
 				#don't include this tweet if it contains a negative parameter or a false boolean parameter
-				for neg_param in negative_params:
+				for neg_param in negative_params + bool_params:
 					if tweet.find(neg_param) != -1:
 						if not is_boolean_param(neg_param) or (is_boolean_param(neg_param) and neg_param not in true_bool_params):
 							break #continue outer for loop, so this tweet is not included
@@ -157,7 +157,7 @@ def tweet_negatively_about_weather():
 		if param in weather_negative: #weather_negative maps params to negative tweets
 			for tweet in weather_negative[param]:
 				#don't include this tweet if it contains a positive parameter or a false boolean parameter
-				for pos_param in positive_params:
+				for pos_param in positive_params + bool_params:
 					if tweet.find(pos_param) != -1:
 						if not is_boolean_param(pos_param) or (is_boolean_param(pos_param) and pos_param not in true_bool_params):
 							break #continue outer for loop, so this tweet is not included
