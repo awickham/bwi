@@ -1,4 +1,4 @@
-bwi
+twitterbot
 ===
 
 Authors: Andy Wickham, Tony Wickham, and Ryan Zabcik
