@@ -1,5 +1,3 @@
-package JenaTutorials;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -10,7 +8,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
-public class RDFTutorials {
+public class SimpleTextGeneration {
 
 	static final String inputFileName  = "camera.owl";
 	static final String modelNameSpace = "http://www.xfront.com/owl/ontologies/camera/#";
