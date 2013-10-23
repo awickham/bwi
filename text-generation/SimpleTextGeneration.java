@@ -1,3 +1,5 @@
+package textGeneration;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -9,7 +11,6 @@ import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class SimpleTextGeneration {
-
 	static final String inputFileName  = "camera.owl";
 	static final String modelNameSpace = "http://www.xfront.com/owl/ontologies/camera/#";
 	static final String QUERY = "Camera";
@@ -25,9 +26,9 @@ public class SimpleTextGeneration {
 		
 		// List information about the given query.
 		OntClass queryClass = model.getOntClass(modelNameSpace + QUERY);
-		ExtendedIterator<OntClass> subClassesIter = queryClass.listSubClasses();
-		ExtendedIterator<OntClass> superClassesIter = queryClass.listSuperClasses();
-		ExtendedIterator<OntProperty> propertiesIter = queryClass.listDeclaredProperties();
+		ExtendedIterator<OntClass> subClassesIter = queryClass.listSubClasses(true);
+		ExtendedIterator<OntClass> superClassesIter = queryClass.listSuperClasses(true);
+		ExtendedIterator<OntProperty> propertiesIter = queryClass.listDeclaredProperties(true);
 		listClasses(subClassesIter, "subclass");
 		listClasses(superClassesIter, "super class");
 		listProperties(propertiesIter);
@@ -64,6 +65,4 @@ public class SimpleTextGeneration {
 		}
 		System.out.println();
 	}
-
-
 }
