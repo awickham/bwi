@@ -3,6 +3,7 @@ package textGeneration;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Scanner;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -22,7 +23,6 @@ import simplenlg.features.*;
 public class SimpleTextGeneration {
 	static final String inputFileName  = "camera.owl";
 	static final String modelNameSpace = "http://www.xfront.com/owl/ontologies/camera/#";
-	static final String QUERY = "Camera";
 
 	public static void main(String[] args) throws IOException {
 		// Read the ontology model from camera.owl.
@@ -33,70 +33,45 @@ public class SimpleTextGeneration {
 		}
 		model.read(in, null);
 		
-		// List information about the given query.
-		OntClass queryClass = model.getOntClass(modelNameSpace + QUERY);
-		if(queryClass == null) {
-			System.out.println("Could not find information about " + QUERY);
-			System.exit(0);
-		}
-		ExtendedIterator<OntClass> subClassesIter = queryClass.listSubClasses(true);
-		ExtendedIterator<OntClass> superClassesIter = queryClass.listSuperClasses(true);
-		ExtendedIterator<OntProperty> propertiesIter = queryClass.listDeclaredProperties(true);
-		//listClasses(subClassesIter, "subclass");
-		//listClasses(superClassesIter, "super class");
-		//listProperties(propertiesIter);
-		generateSentence(subClassesIter, superClassesIter, propertiesIter);
-	}
-
-	/**
-	 * List classes that relate to the query.
-	 * @param iter the iterator over classes to print.
-	 * @param classType the type of class in relation to the query (i.e. subclass or superclass).
-	 */
-	private static void listClasses(ExtendedIterator<OntClass> iter, String classType) {
-		if(iter.hasNext()) {
-			while(iter.hasNext()) {
-				System.out.println(iter.next().getLocalName() + " is a " + classType + " of " + QUERY);
+		// Prompt user to query the ontology, and answer in natural language.
+		Scanner s = new Scanner(System.in);
+		String query = "";
+		System.out.print("Enter a query: ");
+		while(!(query = s.nextLine()).equals("exit")) {
+			OntClass queryClass = model.getOntClass(modelNameSpace + query);
+			if(queryClass == null) {
+				System.err.println("Could not find information about " + query);
+			} else {
+				List<OntClass> subClassesIter = queryClass.listSubClasses(true).toList();
+				List<OntClass> superClassesIter = queryClass.listSuperClasses(true).toList();
+				List<OntProperty> propertiesIter = queryClass.listDeclaredProperties(true).toList();
+				generateSentence(subClassesIter, superClassesIter, propertiesIter, query);
 			}
-		} else {
-			System.out.println("No class is a " + classType + " of " + QUERY);
+			System.out.print("Enter another query, or \"exit\" to exit: ");
 		}
-		System.out.println();
-	}
-
-	/**
-	 * List properties that relate to the query.
-	 * @param iter the iterator over classes to print.
-	 * @param classType the type of class in relation to the query (i.e. subclass or superclass).
-	 */
-	private static void listProperties(ExtendedIterator<OntProperty> iter) {
-		if(iter.hasNext()) {
-			while(iter.hasNext()) {
-				System.out.println(QUERY + " has property " + iter.next().getLocalName());
-			}
-		} else {
-			System.out.println(QUERY + " has no properties");
-		}
-		System.out.println();
+		s.close();
+		System.out.println("Goodbye.");
 	}
 
 	/**
 	 * Generate a simple sentence based on sub classes, super classes, and properties of the query.
 	 */
-	private static void generateSentence(
-			ExtendedIterator<OntClass> subClassesIter,
-			ExtendedIterator<OntClass> superClassesIter,
-			ExtendedIterator<OntProperty> propertiesIter) {
-		System.out.print("A " + QUERY.toLowerCase() + " is a ");
-		listIter(superClassesIter);
-		System.out.print(" with a ");
-		listIter(propertiesIter);
-		System.out.print(". ");
-		listIter(subClassesIter);
-		if(subClassesIter.toList().size() == 1) {
-			System.out.print(" is an example of a " + QUERY.toLowerCase());
-		} else {
-			System.out.print(" are examples of " + QUERY.toLowerCase());
+	private static void generateSentence(List<OntClass> subClasses, List<OntClass> superClasses,
+											List<OntProperty> properties, String query) {
+		System.out.print("A " + query + " is a type of ");
+		listIter(superClasses);
+		if(properties.size() > 0) {
+			System.out.print(" with a ");
+			listIter(properties);
+		}
+		if(subClasses.size() > 0) {
+			System.out.print(". ");
+			listIter(subClasses);
+			if(subClasses.size() == 1) {
+				System.out.print(" is an example of a " + query);
+			} else {
+				System.out.print(" are examples of " + query);
+			}
 		}
 		System.out.println(".");
 	}
@@ -106,8 +81,7 @@ public class SimpleTextGeneration {
 	 * Example: [viewFinder, body, lens] -> "viewFinder, body and lens"
 	 * @param superClassesIter
 	 */
-	private static void listIter(ExtendedIterator<? extends OntResource> iter) {
-		List<? extends OntResource> l = iter.toList();
+	private static void listIter(List<? extends OntResource> l) {
 		for(int i = 0; i < l.size(); i++) {
 			System.out.print(l.get(i).getLocalName());
 			if(l.size() >= 2 && i == l.size() - 2) {
