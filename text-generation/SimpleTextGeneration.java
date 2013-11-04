@@ -21,8 +21,8 @@ import simplenlg.phrasespec.*;
 import simplenlg.features.*;
 
 public class SimpleTextGeneration {
-	static final String inputFileName  = "camera.owl";
-	static final String modelNameSpace = "http://www.xfront.com/owl/ontologies/camera/#";
+	static final String inputFileName  = "db-arch_20131101.owl";
+	static final String modelNameSpace = "http://www.owl-ontologies.com/unnamed.owl#";
 
 	public static void main(String[] args) throws IOException {
 		// Read the ontology model from camera.owl.
@@ -33,11 +33,16 @@ public class SimpleTextGeneration {
 		}
 		model.read(in, null);
 		
+		ExtendedIterator<OntClass> l = model.listClasses();
+		while(l.hasNext()) {
+			System.out.println(l.next());
+		}
+		
 		// Prompt user to query the ontology, and answer in natural language.
 		Scanner s = new Scanner(System.in);
 		String query = "";
 		System.out.print("Enter a query: ");
-		while(!(query = s.nextLine()).equals("exit")) {
+		while(!(query = s.nextLine().replace(" ", "_")).equals("exit")) {
 			OntClass queryClass = model.getOntClass(modelNameSpace + query);
 			if(queryClass == null) {
 				System.err.println("Could not find information about " + query);
@@ -53,12 +58,21 @@ public class SimpleTextGeneration {
 		System.out.println("Goodbye.");
 	}
 
+	private static String capitalize(String s) {
+		return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+	}
+	
+	private static String breakIntoWords(String s) {
+		return s.replace("_", " ");
+	}
+
 	/**
 	 * Generate a simple sentence based on sub classes, super classes, and properties of the query.
 	 */
 	private static void generateSentence(List<OntClass> subClasses, List<OntClass> superClasses,
 											List<OntProperty> properties, String query) {
-		System.out.print("A " + query + " is a type of ");
+		query = breakIntoWords(query);
+		System.out.print(capitalize(query) + " is a type of ");
 		listIter(superClasses);
 		if(properties.size() > 0) {
 			System.out.print(" with a ");
@@ -66,9 +80,9 @@ public class SimpleTextGeneration {
 		}
 		if(subClasses.size() > 0) {
 			System.out.print(". ");
-			listIter(subClasses);
+			listIterWithCapital(subClasses);
 			if(subClasses.size() == 1) {
-				System.out.print(" is an example of a " + query);
+				System.out.print(" is an example of " + query);
 			} else {
 				System.out.print(" are examples of " + query);
 			}
@@ -83,7 +97,29 @@ public class SimpleTextGeneration {
 	 */
 	private static void listIter(List<? extends OntResource> l) {
 		for(int i = 0; i < l.size(); i++) {
-			System.out.print(l.get(i).getLocalName());
+			System.out.print(breakIntoWords(l.get(i).getLocalName()));
+			if(l.size() >= 2 && i == l.size() - 2) {
+				System.out.print(" and ");
+			}
+			else if(i < l.size() - 1) {
+				System.out.print(", ");
+			}
+		}
+	}
+
+	/**
+	 * This is variation of {@link listIter} that capitalizes the first word in the list.
+	 */
+	private static void listIterWithCapital(List<? extends OntResource> l) {
+		if(l.size() == 0) {
+			return;
+		}
+		for(int i = 0; i < l.size(); i++) {
+			String s = breakIntoWords(l.get(i).getLocalName());
+			if(i == 0) {
+				s = capitalize(s);
+			}
+			System.out.print(s);
 			if(l.size() >= 2 && i == l.size() - 2) {
 				System.out.print(" and ");
 			}
