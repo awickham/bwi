@@ -36,10 +36,9 @@ def pub_tweet(tweet_type):
 	time_of_last_tweet = rospy.get_time()
 
 	# tweet the tweet
-	pub = rospy.Publisher("tweet", String)
-	rospy.init_node('twitter_processor')
-	rospy.loginfo("Sent following string to be tweeted: " + tweet)
+	pub = rospy.Publisher("tweet", String, latch=True)
 	pub.publish(tweet)
+	rospy.loginfo("Sent following string to be tweeted: " + tweet)
 
 def callback(data):
 	global time_of_last_tweet
@@ -70,7 +69,7 @@ def listener():
 import time
 def weather_tweet():
 	pub_tweet(WEATHER)
-	time.sleep(600)
+	time.sleep(14400) #four hours
 
 if __name__ == '__main__':
 	# start listening for twitter_task

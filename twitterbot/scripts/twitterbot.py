@@ -72,8 +72,8 @@ def getApi(compName):
 		ebooks_access_token_secret)
 
 def callback(message):
-    #splits the message into multiple tweets if > 140 characters
     tweet = parse_tweet(message.data)
+    #splits the message into multiple tweets if > 140 characters
     api.PostUpdates(tweet)
     rospy.loginfo("Tweeted the following message(s): %s", tweet)
 

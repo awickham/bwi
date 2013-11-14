@@ -48,10 +48,13 @@ very happy
 great
 wonderful
 exuberant
+super
+awesome
 
 Emotion = <3
 lovable
 carefree
+amazing
 
 Emotion = :(
 sad
@@ -61,6 +64,7 @@ unpleasant
 Emotion = :'(
 very sad
 horrific
+terrible
 
 Emotion = >:(
 terrible
@@ -70,16 +74,19 @@ Emotion = :/
 regretful
 boring
 sad
+disappointing
 
 Emotion = -.-
 boring
 tedious
 tiresome
 unamusing
+annoying
 
 Emotion = :s
 scary
 uncertain
+worrisome
 END ADJECTIVES-CAUSE
 
 ***BEGIN COMMENT***
@@ -96,6 +103,7 @@ relaxed
 
 Emotion = :D
 overjoyed
+wonderful
 
 Emotion = <3
 loved
@@ -107,6 +115,7 @@ sad
 
 Emotion = :'(
 very depressed
+very sad
 emotional
 upset
 
@@ -119,12 +128,14 @@ Emotion = :/
 bored
 uncertain
 sad
+disappointed
 
 Emotion = -.-
 tired
 exhausted
 bored
 unamused
+annoyed
 
 Emotion = :s
 frightened
@@ -138,6 +149,7 @@ Now we map emotions to adverbs.
 ADVERBS
 Emotion = :)
 happily
+gladly
 
 Emotion = :D
 very happily
@@ -147,6 +159,7 @@ lovingly
 
 Emotion = :(
 sadly
+unfortunately
 
 Emotion = :'(
 very sadly
@@ -160,6 +173,7 @@ regretfully
 
 Emotion = -.-
 monotonously
+annoyingly
 
 Emotion = :s
 frightfully
@@ -182,6 +196,7 @@ HASHTAG EMOTION
 Emotion = :)
 #OhHappyDay
 #LifeIsBeautiful
+#hookem
 
 Emotion = :D
 #happyhappyhappy
@@ -190,6 +205,7 @@ Emotion = :D
 Emotion = <3
 #WhatIsLove
 #LoveToday
+#lovelovelove
 
 Emotion = :(
 #whyme
@@ -201,9 +217,11 @@ Emotion = :'(
 
 Emotion = >:(
 #ImGoingToRunOverSomeone
+#GetMeOutOfHere
 
 Emotion = :/
 #Regrets
+#whatever
 
 Emotion = -.-
 #IsItTomorrowYet
@@ -234,15 +252,20 @@ I can tell today is going to be a <adj-cause_:)_:D> day! <sky-description> skies
 It's a <adj-cause_:)_:D|text_"beautiful"> <current-temp> degrees outside and I am just loving life! <emoticon_:)_<3> <hashtag-emotion_:)|> <hashtag-emotion_<3|>
 <is-hot?> It may be warm out, but at least there is a <adj-cause_:)|text_"nice"> <wind-speed> MPH breeze. :)
 <is-clear?> <text_"Wow!"_"Amazing!"_"Take a look outside!"> There's hardly a cloud in sight!
+What a pretty view! The sky is <sky-description> with a high of <high-temp>. <hashtag-emotion_:)>
 END WEATHER POSITIVE
 
 WEATHER NEGATIVE
 Ugh, there's <precip-amount> rain! <precip-inches> inches expected today. <emoticon_:(_:'(_:/>
 I can't see the sun. <emoticon_:(_:/> The clouds are covering <cloud-coverage-percent>% of the sky. <emoticon_:(_:/_:'(>
 A high of <high-temp-cold> degrees and a low of <low-temp-cold>?! My motors are going to refuse to move! <emoticon_:(_:/_:'(|hashtag-emotion_:s_:(|>
-I'm glad I don't sweat... today's high is <high-temp-hot> and there is <humidity-percent>% humidity. <emoticon_:(_:/|> <text_:)="Maybe that means more people will be inside to visit me! :)"_:(="What a <adj-cause_:(_:'(> day!">
+I'm glad I don't sweat... it is <current-temp-hot> degrees right now and there is <humidity-percent>% humidity. <emoticon_:(_:/|> <text_:)="Maybe that means more people will be inside to visit me! :)"_:(="What a <adj-cause_:(_:'(> day!">
 Brr, it's cold! And this <wind-speed> MPH wind is certainly not making things any better! <set-emotion_>:(_:(_:'(> <emoticon|hashtag-emotion|>
 <current-temp-cold?> Good thing I'm inside... it's pretty cold out there! <emoticon_:s_:(|>
+<is-rain?> <is-overcast?> By the looks of things, I'd say a storm is brewing! <emoticon_:s_:(|hashtag-emotion_:s_:(>
+<is-rain?> <is-overcast?> <high-wind-speed?> Oh dear... <sky-description> skies, <precip-amount> rain, and <wind-speed> MPH winds... I should probably stay inside!
+<is-rain?> <is-overcast?> <high-wind-speed?> Loving this absolutely <adj-cause_:)_:D_<3|text_"gorgeous"> weather... #not
+<current-temp-hot?> Oh it feels great today... in this <adj-cause_:)> air conditioning! Outside, not so much. #gotcha
 END WEATHER NEGATIVE
 
 WEATHER NEUTRAL
@@ -264,6 +287,7 @@ Hello, world! Today is going to be a <adj-cause> day. <emoticon>
 
 Key = turned_off
 Goodbye.
+I have been slain!
 
 Key = bored
 *sigh* I'm just <adv_-.-_:/> sitting here... <emoticon> <hashtag-emotion>

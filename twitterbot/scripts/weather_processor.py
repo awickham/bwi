@@ -1,5 +1,6 @@
-from textfile_to_database import weather_positive, weather_negative, weather_neutral, emotion_ratios
-from twitter_database import get_high_temp, get_low_temp, get_current_temp, get_precip_inches, get_precip_amount, get_cloud_coverage_percent, get_sky_description, get_humidity, get_wind_speed, get_weather_description, parse_tweet
+from textfile_to_database import weather_positive, weather_negative, weather_neutral, emotion_ratios, bool_params
+from twitter_database import get_high_temp, get_low_temp, get_current_temp, get_precip_inches, get_precip_amount, get_cloud_coverage_percent, get_sky_description, get_humidity, get_wind_speed, get_weather_description
+from twitter_database import parse_tweet
 from random import choice, randint
 
 POSITIVE = 0
@@ -8,20 +9,20 @@ NEUTRAL = 2
 
 positive_params = []
 negative_params = []
+true_bool_params = []
 
 '''weather_params = ["<high-temp>", "<high-temp-cold>", "<high-temp-hot>", "<low-temp>", "<low-temp-cold>", "<low-temp-hot>", "<current-temp>", "<current-temp-cold>", "<current-temp-hot>", "<precip-inches>", "<precip-amount>", "<cloud-coverage-percent>", "<sky-description>", "<humidity>", "<wind-speed>", "<weather-description>", "<high-temp-cold?>", "<high-temp-hot?>", "<low-temp-cold?>", "<low-temp-hot?>", "<current-temp-cold?>", "<current-temp-hot?>", "<is-rain?>", "<is-clear?>", "<is-overcast?>", "<high-humidity?>", "<low-humidity?>", "<high-wind-speed?>", "<low-wind-speed?>"]'''
 
 def add_boolean_token(bool_token):
-	global positive_params
-	global negative_params
+	global positive_params, negative_params, true_bool_params
 	positive_params.append(bool_token)
 	negative_params.append(bool_token)
+	true_bool_params.append(bool_token)
 
 def decide_positive_or_negative():
 	'''Decides whether to tweet positvely or negatively about the weather.
 	This decision is based on aspects of the weather and emotion ratios.'''
-	global positive_params
-	global negative_params
+	global positive_params, negative_params
 	positive_params = []
 	negative_params = []
 	
@@ -62,7 +63,7 @@ def decide_positive_or_negative():
 			add_boolean_token("<current-temp-hot?>")
 
 	precip_inches = float(get_precip_inches())
-	if precip_inches == 0:
+	if precip_inches == 0.0:
 		positive_params.append("<precip-inches>")
 		positive_params.append("<precip-amount>")
 	else:
@@ -78,7 +79,8 @@ def decide_positive_or_negative():
 	else:
 		negative_params.append("<cloud-coverage-percent>")
 		negative_params.append("<sky-description>")
-		add_boolean_token("<is-overcast?>")
+		if cloud_coverage_percent == 100:
+			add_boolean_token("<is-overcast?>")
 
 	'''Deciding whether humidity is negative depends on temperature.
 	Thus, we created a crude formula for uncomfortability: 4000 / temp = minimum uncomfortable humidity
@@ -92,12 +94,12 @@ def decide_positive_or_negative():
 		add_boolean_token("<high-humidity?>")
 
 	wind_speed = int(get_wind_speed())
+	if wind_speed >= 20:
+		add_boolean_token("<high-wind-speed?>")
 	if "<current-temp-cold>" in negative_params and wind_speed > 15:
 		negative_params.append("<wind-speed>")
-		add_boolean_token("<low-wind-speed?>")
 	elif "<current-temp-hot>" in negative_params and wind_speed > 15:
 		positive_params.append("<wind-speed>")
-		add_boolean_token("<high-wind-speed?>")
 
 	positive_emotions_sum = int(emotion_ratios[":)"]) + int(emotion_ratios[":D"]) + int(emotion_ratios["<3"])
 	negative_emotions_sum = int(emotion_ratios[":("]) + int(emotion_ratios[":'("]) + int(emotion_ratios[">:("])
@@ -119,19 +121,28 @@ def is_boolean_param(param):
 	return len(param) >= 2 and param[len(param)-2] == '?'
 
 def tweet_neutrally_about_weather():
-	return parse_tweet(choice(weather_neutral)) #TODO: stop parsing here; twitterbot will do that
+	neutral_tweets = []
+	global true_bool_params
+	for tweet in weather_neutral:
+		#don't include this tweet if it contains a false boolean param
+		for bool_param in bool_params:
+			if tweet.find(bool_param) != -1 and bool_param not in true_bool_params:
+				break #continue outer for loop, so this tweet is not included
+		else:
+			neutral_tweets.append(tweet)
+	return parse_tweet(choice(neutral_tweets)) #TODO: stop parsing here; twitterbot will do that
 
 def tweet_positively_about_weather():
 	positive_tweets = []
-	global positive_params
-	global negative_params
+	global positive_params, negative_params, true_bool_params
 	for param in positive_params:
 		if param in weather_positive: #weather_positive maps params to positive tweets
 			for tweet in weather_positive[param]:
-				#don't include this tweet if it contains a negative parameter (unless it's a boolean param)
-				for neg_param in negative_params:
-					if tweet.find(neg_param) != -1 and not is_boolean_param(neg_param):
-						break #continue outer for loop
+				#don't include this tweet if it contains a negative parameter or a false boolean parameter
+				for neg_param in negative_params + bool_params:
+					if tweet.find(neg_param) != -1:
+						if not is_boolean_param(neg_param) or (is_boolean_param(neg_param) and neg_param not in true_bool_params):
+							break #continue outer for loop, so this tweet is not included
 				else:
 					positive_tweets.append(tweet)
 	if len(positive_tweets) == 0:
@@ -141,15 +152,15 @@ def tweet_positively_about_weather():
 
 def tweet_negatively_about_weather():
 	negative_tweets = []
-	global positive_params
-	global negative_params
+	global positive_params, negative_params, true_bool_params
 	for param in negative_params:
 		if param in weather_negative: #weather_negative maps params to negative tweets
 			for tweet in weather_negative[param]:
-				#don't include this tweet if it contains a positive parameter (unless it's a boolean param)
-				for pos_param in positive_params:
-					if tweet.find(pos_param) != -1  and not is_boolean_param(pos_param):
-						break #continue outer for loop
+				#don't include this tweet if it contains a positive parameter or a false boolean parameter
+				for pos_param in positive_params + bool_params:
+					if tweet.find(pos_param) != -1:
+						if not is_boolean_param(pos_param) or (is_boolean_param(pos_param) and pos_param not in true_bool_params):
+							break #continue outer for loop, so this tweet is not included
 				else:
 					negative_tweets.append(tweet)
 	if len(negative_tweets) == 0:
