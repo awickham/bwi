@@ -167,4 +167,21 @@ def tweet_about_weather():
 	else:
 		return tweet_neutrally_about_weather()
 
-print(tweet_about_weather())
+def make_happy():
+	for emotion in emotion_ratios:
+		if emotion == ':)' or emotion == ':D' or emotion == '<3':
+			emotion_ratios[emotion] = 1
+		else:
+			emotion_ratios[emotion] = 0
+
+def make_sad():
+	for emotion in emotion_ratios:
+		if emotion == ':(' or emotion == ':/' or emotion == ":'(":
+			emotion_ratios[emotion] = 1
+		else:
+			emotion_ratios[emotion] = 0
+
+make_sad()
+print('sad: ' + tweet_about_weather())
+make_happy()
+print('happy: ' + tweet_about_weather())

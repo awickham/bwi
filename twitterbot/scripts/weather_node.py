@@ -1,7 +1,7 @@
 from pywwo import *
 
 setKey('h6zcfapfu9647c285nyzdgvb', 'free')
-w=LocalWeather('Austin, TX, United States')
+w=LocalWeather('78712')
 
 inches_per_milimeter = 0.039370
 
@@ -33,9 +33,9 @@ print "Precipitation prediction: %s inches" % (str(forecasted_precip_inches))
 print "Weather description: %s" % (forecasted_weatherDesc)
 print ""
 print "Current weather"
-print "Temperature: %s degrees Fahrenheit" % (current_temp)
-print "Precipitation: %s inches" % (str(curr_precip_inches))
-print "Humidity: %s percent" % (str(humidity))
-print "Cloud coverage: %s percent" % (str(cloudcover))
-print "Weather description: %s" % (curr_weatherDesc)
+print "Temperature: %s degrees Fahrenheit" % (current_temp())
+print "Precipitation: %s inches" % (str(curr_precip_inches()))
+print "Humidity: %s percent" % (str(humidity()))
+print "Cloud coverage: %s percent" % (str(cloudcover()))
+print "Weather description: %s" % (curr_weatherDesc())
 '''
