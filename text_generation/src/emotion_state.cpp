@@ -6,22 +6,41 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream>
-#include <fstream>
-#include <sstream>
+#include <string>
 
-#include <unistd.h>
+// Above this is happy.
+#define HAPPY_THRESHOLD 150.0
+// Below this is sad.
+#define SAD_THRESHOLD 125.0
+
+double getVariance(const sensor_msgs::ImageConstPtr &imgptr) {
+    const sensor_msgs::Image img = *imgptr;
+    double red, green, blue;
+    double totalVariance;
+    for(int i=0; i < img.height*img.step - 2; i+=3) {
+        red = img.data[i];
+        green = img.data[i+1];
+        blue = img.data[i+2];
+        double averageRGB = (red+green+blue) / 3.0;
+        totalVariance += (pow(red-averageRGB, 2) + pow(green-averageRGB, 2) +
+                          pow(blue-averageRGB, 2)) / 3.0;
+    }
+    double numElements = img.height*img.width;
+    return totalVariance / numElements;
+}
 
 void imageCallback(const sensor_msgs::ImageConstPtr &imgptr) {
-    //Load image into OpenCV
     const sensor_msgs::Image img = *imgptr;
-    cv_bridge::CvImagePtr image = cv_bridge::toCvCopy(img);
-    cv::Mat cvImage = image->image;
-    cv::Mat cvGray;
-
-    //Convert image to grayscale
-    cvtColor(cvImage, cvGray, CV_RGB2GRAY);
-    cv::Mat cvOutput(cvGray);
+    
+    double variance = getVariance(imgptr);
+    
+    std::string emotion = "ambivalent";
+    if(variance > HAPPY_THRESHOLD) {
+        emotion = "happy";
+    } else if(variance < SAD_THRESHOLD) {
+        emotion = "sad";
+    }
+    std::cout << "I'm feeling " << emotion << "          \r";
 }
 
 int main(int argc, char** argv) {
@@ -29,5 +48,8 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
 
     image_transport::ImageTransport it(nh);
-    image_transport::Subscriber sub = it.subscribe("input", 1, imageCallback);
+    image_transport::Subscriber sub = it.subscribe("/camera/rgb/image_color", 1, imageCallback);
+
+    ros::spin();
+    return 0;
 }
